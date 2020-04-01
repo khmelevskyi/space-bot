@@ -14,13 +14,21 @@ text = {
     'no': {0: 'Ні',
            1: 'No'},
 
-    #BACK_OR_MAIN_MENU
+    #BACK
     'back': {0: 'Назад',
              1: 'Back'},
+
+    #MAIN_MENU
+    'to_main_menu': {0: 'У головне меню',
+                     1: 'To main menu'},
 
     #LETS_GO
     'lets_go': {0: "Вперед",
                 1: "Let's go"},
+
+    #TRY_AGAIN
+    'try_again': {0: 'Спробувати ще раз',
+                  1: 'Try one more time'},
 
     #MAIN_MENU
     'help_ask': {0: 'Дякую. Чим я можу бути корисна?\nГоловне меню:',
@@ -68,19 +76,45 @@ text = {
                            1: 'First things first: is your project related to space tech? Do you build, or use '
                               'satellites and satellite data, design rockets, fuel and materials, plan on mining '
                               'resources in space, etc?'},
-                  'edu': {0: '',
-                          1: ''},
-                  'fantastic': {0: '',
-                                1: ''},
-                  'prototype': {0: '',
-                                1: ''},
-                  'team': {0: '',
-                           1: ''},
-                  'q_round': {0: '',
-                              1: ''},
+                  'edu': {0: 'Може, ваш проєкт спрямований на популяризацію космосу або пропонує освіту для '
+                             'тих, хто хоче працювати в нашій індустрії?',
+                          1: 'Maybe your project is about science or education for those who want to work in'
+                             ' the space industry?'},
+                  'fantastic': {0: 'Тоді можливо ви працюєте з чимось фантастичним? Колонізація інших планет, '
+                                   'космічний туризм, подорожі через гіперпростір?',
+                                1: 'So maybe you’re working on something really future forward? Space colonies, '
+                                   'tourism, traveling through hyperspace and things like that?'},
+                  'prototype': {0: 'Наступне запитання. У вас є прототип продукту, який зможуть оцінити наші експерти?',
+                                1: 'Next question. Do you have a prototype of the product that can be presented to '
+                                   'our board of experts?'},
+                  'team': {0: 'Тепер про найголовніше – про людей. Ми чекаємо на команди складом від 2 до 6 людей,'
+                              ' які розробляють власний продукт щонайменше на 50%. Це про вас?',
+                           1: 'And now for the most important thing: people. We are looking for the teams from 2 '
+                              'to 6 people who build their product themselves, at least for 50%. Is it about you?'},
+                  'q_round': {0: 'Бачу, що ваша команда готова працювати в акселераторі та отримувати підтримку від'
+                                 ' найкращих експертів космічної індустрії. Хочете залишити заявку і потрапити '
+                                 'у відбірковий тур?',
+                              1: 'As far as I can see, your team is ready to accelerate with us. Do you '
+                                 'want to sign up for the try-outs?'},
                   },
     'startup_ans': {'first': {0: 'Попереду 3 запитання, на які ви зможете відповісти Так або Ні',
                               1: 'I’m going to ask you 3 questions. Please answer Yes or No'},
+                    'second': {0: 'Ми чекаємо на стартапи, які вже створили прототип власного продукту. Може, '
+                                  'спробувати пізніше?',
+                               1: 'We’re looking for the startups on the prototype stage. Maybe you would like '
+                                  'to try later?'},
+                    'third': {0: 'Нажаль, без команди нічого не вийде. Може, наступного разу?',
+                              1: 'Unfortunately, we can’t work together, if you don’t have a proper team. Maybe '
+                                 'next time?'},
+                    'fourth': {0: 'Здається, ми усе спробували. Нажаль, ваш проєкт не стосується '
+                                  'космосу, тому Yangel Accelerator не зможе надати вам необхідну підтримку.',
+                               1: 'Unfortunately, your project doesn’t seem to be space related, '
+                                  'so I’m not sure that Yangel Accelerator would be useful for you right now.'},
+                    'fifth': {0: 'Дякую, що вирішили зареєструватись! Прошу відповісти на всі запитання коротко та '
+                                 'ясно. Після того, як я опрацюю вашу анкету, із вами зв’яжуться координатори. Почнемо?',
+                              1: 'Excellent decision! Please answer the following questions. After I process '
+                                 'your data, our coordinator will reach out to you. Let’s begin, shall we?'},
+
                     },
 
 
