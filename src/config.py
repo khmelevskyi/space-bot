@@ -1,6 +1,5 @@
 text = {
-    "start": {1: "",
-              0: ""},
+    "start": "Hi! I’m Maryna, Yangel Accelerator onboarding bot. Ду ю спік юкрейніан?",
 
     #LANGUAGE
     "ask_lang": "Вибери мову: / Choose the language below:",
@@ -199,6 +198,4 @@ text = {
                'site': {0: '',
                         1: ''},
                },
-
-
 }

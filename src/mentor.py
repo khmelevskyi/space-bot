@@ -2,7 +2,7 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from variables import *
 import config as c
 from language_set import language
-from main_menu import main_menu
+from menu import main_menu
 
 
 def mentor_expertise(update, context): # not finished

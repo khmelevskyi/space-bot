@@ -2,11 +2,11 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from variables import *
 import config as c
 from language_set import language
-from main_menu import main_menu
+from menu import main_menu
 
 
 def try_again_or_mm(update, context): # try again(go to question about tech) or move to main menu
-    lang = language()
+    lang = language(update)
     answer = update.message.text
     if answer == c.text['try_again'][lang]:
         return tech_yes_no(update, context)
@@ -16,7 +16,7 @@ def try_again_or_mm(update, context): # try again(go to question about tech) or 
 
 ### team, prototype and qualification round
 def q_round_yes_no(update, context):
-    lang = language()
+    lang = language(update)
     answer = update.message.text
     if answer == c.text['yes'][lang]:
         context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['startup_ans']['fifth'][lang])
@@ -27,7 +27,7 @@ def q_round_yes_no(update, context):
 
 
 def team_yes_no(update, context):
-    lang = language()
+    lang = language(update)
     answer = update.message.text
     if answer == c.text['yes'][lang]:
         reply_keyboard = [[c.text['yes'][lang], c.text['to_main_menu'][lang]]]
@@ -42,7 +42,7 @@ def team_yes_no(update, context):
 
 
 def proto_yes_no(update, context):
-    lang = language()
+    lang = language(update)
     answer = update.message.text
     if answer == c.text['yes'][lang]:
         reply_keyboard = [[c.text['yes'][lang], c.text['no'][lang]]]
@@ -59,7 +59,7 @@ def proto_yes_no(update, context):
 
 ### tech, edu and fantastic questions
 def fantastic_yes_no(update, context): # if the answer to fantastic question is no, it means that the project is not
-    lang = language() # related to the space at all
+    lang = language(update) # related to the space at all
     answer = update.message.text
     if answer == c.text['yes'][lang]:
         reply_keyboard = [[c.text['yes'][lang], c.text['no'][lang]]]
@@ -74,7 +74,7 @@ def fantastic_yes_no(update, context): # if the answer to fantastic question is 
 
 
 def edu_yes_no(update, context):
-    lang = language()
+    lang = language(update)
     answer = update.message.text
     if answer == c.text['yes'][lang]:
         reply_keyboard = [[c.text['yes'][lang], c.text['no'][lang]]]
@@ -89,7 +89,7 @@ def edu_yes_no(update, context):
 
 
 def tech_yes_no(update, context): # takes the answer from tech_q(about tech question) and (if answer for tech_q is yes)
-    lang = language()  # returns the answer for prototype question(yes or no) or (if answer for tech_q is no)
+    lang = language(update)  # returns the answer for prototype question(yes or no) or (if answer for tech_q is no)
     answer = update.message.text  # returns the answer for education question
     if answer == c.text['yes'][lang] or answer == c.text['try_again'][lang]:
         reply_keyboard = [[c.text['yes'][lang], c.text['no'][lang]]]
@@ -104,7 +104,7 @@ def tech_yes_no(update, context): # takes the answer from tech_q(about tech ques
 
 
 def tech_q(update, context): #takes the answer from the prev question, if answer is 'let's go' - makes two buttons: yes
-    lang = language() # or no, and sends the next question, then returns the answer of this question
+    lang = language(update) # or no, and sends the next question, then returns the answer of this question
     answer = update.message.text
     if answer == c.text['lets_go'][lang]:
         context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['startup_ans']['first'][lang])
@@ -118,7 +118,7 @@ def tech_q(update, context): #takes the answer from the prev question, if answer
 
 
 def startup(update, context):
-    lang = language()
+    lang = language(update)
     reply_keyboard = [[c.text['lets_go'][lang], c.text['back'][lang]]]
     markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
     update.message.reply_text(text=c.text['startup'][lang], reply_markup=markup)

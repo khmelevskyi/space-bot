@@ -2,7 +2,7 @@ from telegram import ReplyKeyboardMarkup
 from variables import *
 from language_set import language
 import config as c
-from main_menu import main_menu
+from menu import main_menu
 
 
 def about_yangel_handler(update, context):
