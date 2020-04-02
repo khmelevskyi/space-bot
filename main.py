@@ -1,20 +1,70 @@
 from telegram.ext import Updater, Filters, ConversationHandler, MessageHandler
 from telegram.ext import CommandHandler # handles with user's commands
-from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove #KeyboardButton,InlineKeyboardMarkup,InlineKeyboardButton
 from os import environ as env # for environmental variables
 import logging #used for error detection
 import config as c
 
 LANG, MAIN_MENU, MAIN_MENU_HANDLER, ABOUT_YANGEL, ABOUT_YANGEL_HANDLER, STARTUP, TECH_OR_MM, \
-TECH_YES_NO, PROTOTYPE_YES_NO, EDU_YES_NO, TEAM_YES_NO, FANTASTIC_YES_NO, TRY_AGAIN_OR_MM, Q_ROUND_YES_NO = range(14)
+TECH_YES_NO, PROTOTYPE_YES_NO, EDU_YES_NO, TEAM_YES_NO, FANTASTIC_YES_NO, TRY_AGAIN_OR_MM, Q_ROUND_YES_NO, \
+MENTOR_HANDLER, MENTOR_NAME, MENTOR_EXPERTISE = range(17)
 
 lang = 0
+name = ''
+
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-##### startup
+logger = logging.getLogger(__name__)
+'''MENTOR'''
 
 
-def try_again_or_mm(update, context):
+def mentor_expertise(update, context): # not finished, not correct
+    answer = update.message.text
+    context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['mentor_q']['final_q'][lang].format(name=name))
+
+
+def mentor_name(update, context):
+    global name
+    answer = update.message.text
+    try:
+        a1, a2 = answer.split()
+    except ValueError:
+        update.message.reply_text(text='Enter both: name and lastname', reply_markup=ReplyKeyboardRemove())
+        return MENTOR_NAME
+    if len(answer) >= 2 and a1.isalpha() or a2.isalpha():
+        name = a1
+        with open('some_file', 'w') as file:
+            file.write(answer.title())
+            file.close()
+        update.message.reply_text(text=c.text['mentor_q']['expertise'][lang], reply_markup=ReplyKeyboardRemove())
+        return MENTOR_EXPERTISE
+    else:
+        update.message.reply_text(text='Enter your name and lastname properly', reply_markup=ReplyKeyboardRemove())
+        return MENTOR_NAME
+
+
+def mentor_handler(update, context):
+    answer = update.message.text
+    if answer == c.text['mentor_opt'][lang]:
+        context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['mentor_q']['answer'][lang])
+        update.message.reply_text(text=c.text['mentor_q']['name'][lang], reply_markup=ReplyKeyboardRemove())
+        return MENTOR_NAME
+    elif answer == c.text['back'][lang]:
+        return main_menu(update, context)
+
+
+def mentor(update, context):
+    reply_keyboard = [[c.text['mentor_opt'][lang], c.text['back'][lang]]]
+    markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
+    update.message.reply_text(text=c.text['mentor'][lang], reply_markup=markup)
+    return MENTOR_HANDLER
+
+
+'''MENTOR'''
+'''STARTUP'''
+
+
+def try_again_or_mm(update, context): # try again(go to question about tech) or move to main menu
     answer = update.message.text
     if answer == c.text['try_again'][lang]:
         return tech_yes_no(update, context)
@@ -26,8 +76,9 @@ def try_again_or_mm(update, context):
 def q_round_yes_no(update, context):
     answer = update.message.text
     if answer == c.text['yes'][lang]:
-        context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['startup_ans']['fifth'][lang]) # fill the blank
-        return main_menu(update, context)
+        context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['startup_ans']['fifth'][lang])
+        update.message.reply_text(text=c.text['startup_blank_q'][lang], reply_markup=ReplyKeyboardRemove())
+        pass ##################################### fill the blank
     elif answer == c.text['to_main_menu'][lang]:
         return main_menu(update, context)
 
@@ -43,7 +94,7 @@ def team_yes_no(update, context):
         reply_keyboard = [[c.text['to_main_menu'][lang], c.text['try_again'][lang]]]
         markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
         update.message.reply_text(text=c.text['startup_ans']['third'][lang], reply_markup=markup)
-        return TRY_AGAIN_OR_MM
+        return TRY_AGAIN_OR_MM # try again(go to question about tech) or move to main menu
 
 
 def proto_yes_no(update, context):
@@ -62,8 +113,8 @@ def proto_yes_no(update, context):
 
 
 ### tech, edu and fantastic questions
-def fantastic_yes_no(update, context):
-    answer = update.message.text
+def fantastic_yes_no(update, context): # if the answer to fantastic question is no, it means that the project is not
+    answer = update.message.text # related to the space at all
     if answer == c.text['yes'][lang]:
         reply_keyboard = [[c.text['yes'][lang], c.text['no'][lang]]]
         markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
@@ -90,9 +141,9 @@ def edu_yes_no(update, context):
         return FANTASTIC_YES_NO
 
 
-def tech_yes_no(update, context):
-    answer = update.message.text
-    if answer == c.text['yes'][lang] or answer == c.text['try_again'][lang]:
+def tech_yes_no(update, context): # takes the answer from tech_q(about tech question) and (if answer for tech_q is yes)
+    answer = update.message.text  # returns the answer for prototype question(yes or no) or (if answer for tech_q is no)
+    if answer == c.text['yes'][lang] or answer == c.text['try_again'][lang]: # returns the answer for education question
         reply_keyboard = [[c.text['yes'][lang], c.text['no'][lang]]]
         markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
         update.message.reply_text(text=c.text['startup_q']['prototype'][lang], reply_markup=markup)
@@ -104,8 +155,8 @@ def tech_yes_no(update, context):
         return EDU_YES_NO
 
 
-def tech_q(update, context):
-    answer = update.message.text
+def tech_q(update, context): #takes the answer from the prev question, if answer is 'let's go' - makes two buttons: yes
+    answer = update.message.text # or no, and sends the next question, then returns the answer of this question
     if answer == c.text['lets_go'][lang]:
         context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['startup_ans']['first'][lang])
         reply_keyboard = [[c.text['yes'][lang], c.text['no'][lang]]]
@@ -122,10 +173,12 @@ def startup(update, context):
     markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
     update.message.reply_text(text=c.text['startup'][lang], reply_markup=markup)
     return TECH_OR_MM
-##### startup
 
 
-### about yangel accelerator
+'''STARTUP'''
+'''ABOUT YANGEL'''
+
+
 def about_yangel_handler(update, context):
     answer = update.message.text
     if answer == c.text['first_menu']['first_option'][lang]:
@@ -139,7 +192,9 @@ def about_yangel(update, context):
     markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True)
     update.message.reply_text(text=c.text['one_answer'][lang], reply_markup=markup)
     return ABOUT_YANGEL_HANDLER
-### about yangel accelerator
+
+
+'''ABOUT YANGEL'''
 
 
 ### main menu
@@ -150,6 +205,8 @@ def main_menu_handler(update, context):
         return about_yangel(update, context)
     elif answer == c.text['main_menu']['second_option'][lang]:
         return startup(update, context)
+    elif answer == c.text['main_menu']['third_option'][lang]:
+        return mentor(update, context)
 
 
 def main_menu(update, context):
@@ -184,6 +241,11 @@ def done(update, context):
     return ConversationHandler.END
 
 
+def error(update, context):
+    """Log Errors caused by Updates."""
+    logger.warning('Update "%s" caused error "%s"', update, context.error)
+
+
 def main():
     api_key = env.get('API_KEY')
 
@@ -211,6 +273,9 @@ def main():
             TRY_AGAIN_OR_MM: [MessageHandler(Filters.text, try_again_or_mm), *necessary_hendlers],
             FANTASTIC_YES_NO: [MessageHandler(Filters.text, fantastic_yes_no), *necessary_hendlers],
             Q_ROUND_YES_NO: [MessageHandler(Filters.text, q_round_yes_no), *necessary_hendlers],
+            MENTOR_HANDLER: [MessageHandler(Filters.text, mentor_handler), *necessary_hendlers],
+            MENTOR_NAME: [MessageHandler(Filters.text, mentor_name), *necessary_hendlers],
+            MENTOR_EXPERTISE: [MessageHandler(Filters.text, mentor_expertise), *necessary_hendlers],
 
         },
 

@@ -116,6 +116,50 @@ text = {
                                  'your data, our coordinator will reach out to you. Let’s begin, shall we?'},
 
                     },
+    'startup_blank_q': {'name': {0: 'Будь ласка, представтесь',
+                                 1: 'What’s your name?'},
+                        'email': {0: 'Вкажіть електронну адресу',
+                                  1: 'What’s your email?'},
+                        'idea': {0: 'Суть ідеї в 1-2 реченнях',
+                                 1: 'What is your project’s big idea? Up to 140 symbols, please'},
+                        'proto': {0: 'Що собою являє прототип вашого продукту?',
+                                  1: 'What does the prototype look like?'},
+                        'why_we': {0: 'Для чого вам потрібна акселераційна програма?',
+                                   1: 'Why do you need an acceleration program?'},
+                        'final_q': {0: 'Дякую за відповіді, {name}! Протягом тижня ви отримаєте додаткові запитання '
+                                       'від координаторів, а потім надійде запрошення на зустріч зі скаутом програми.'
+                                       ' Я можу ще чимось бути корисна?',
+                                    1: 'Thank you, {name}! In a week you’ll receive additional questions from our '
+                                       'coordinator, and after that you’ll be invited to a meeting with the scout. '
+                                       'Can I do anything else for you?'},
+                        },
+
+    #MENTOR
+    'mentor': {0: 'Дякую за вашу готовність допомагати нашим учасникам. Нам потрібні ментори із різною експертизою,'
+                  ' які будуть готові співпрацювати онлайн або офлайн. Будь ласка, заповніть форму для менторів. '
+                  'Я опрацюю дані, а потім із вами зв’яжуться координатори.',
+               1: 'We appreciate your help! Yangel Accelerator needs online and offline mentors with all kinds'
+                  ' of backgrounds. Please fill the application form so we can reach out to you.'},
+    'mentor_opt': {0: 'Хочу в ментори',
+                   1: 'Become a mentor'},
+    'mentor_q': {'answer': {0: 'Попереду 5 запитань, які допоможуть мені визначити, як нам краще'
+                               ' налаштувати співпрацю. Будь ласка, вкажіть актуальні контакти, щоб я '
+                               'могла передати їх координаторам.',
+                            1: 'Please answer the following questions. After I process '
+                               'your data, our coordinator will reach out to you.'},
+                 'name': {0: 'Як вас звати?',
+                          1: 'What’s your name?'},
+                 'expertise': {0: 'Які ваші основні компетенції?',
+                               1: 'What are your main fields of expertise'},
+                 'experience': {0: 'Ви працювали як ментор на хакатонах, в інкубаторах, тощо? В яких?',
+                                1: 'Did you ever work as a mentor? Where?'},
+                 'site': {0: 'Вкажіть посилання на свій LinkedIn або власний сайт',
+                          1: 'How do we find you on LinkedIn?'},
+                 'email': {0: 'Вкажіть e-mail, будь ласка',
+                           1: 'What’s your email?'},
+                 'final_q': {0: 'Дякую за відповіді, {name}! Я можу ще чимось бути корисна?',
+                             1: 'Thank you, {name}! Can I do anything else for you?'},
+                 },
 
 
 }
