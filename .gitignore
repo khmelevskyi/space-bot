@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+__init__.py
+lang_set.py
+startup_menu.py
+.idea
