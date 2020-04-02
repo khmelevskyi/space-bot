@@ -3,10 +3,13 @@ text = {
               0: ""},
 
     #LANGUAGE
-    "ask_lang": {0: "Вибери мову:",
-                 1: "Choose the language below:"},
+    "ask_lang": "Вибери мову: / Choose the language below:",
     "en": "English, please 🇬🇧",
     "ua": "Українською, будь ласка 🇺🇦",
+
+    #THANKS
+    'thanks': {0: 'Дякую',
+               1: 'Thank you'},
 
     #YES & NO
     'yes': {0: 'Так',
@@ -31,8 +34,8 @@ text = {
                   1: 'Try one more time'},
 
     #MAIN_MENU
-    'help_ask': {0: 'Дякую. Чим я можу бути корисна?\nГоловне меню:',
-                 1: 'Thank you. Let’s see how I can help you today\nMain menu:'},
+    'help_ask': {0: 'Чим я можу бути корисна?\nГоловне меню:',
+                 1: 'Let’s see how I can help you today\nMain menu:'},
     'main_menu': {'first_option': {0: 'Розкажи мені про Yangel Accelerator',
                                    1: 'Tell me about Yangel Accelerator'},
                   'second_option': {0: 'Я маю стартап',
@@ -160,6 +163,42 @@ text = {
                  'final_q': {0: 'Дякую за відповіді, {name}! Я можу ще чимось бути корисна?',
                              1: 'Thank you, {name}! Can I do anything else for you?'},
                  },
+    #PARTNER
+    'partner': {0: 'Дякую за готовність підтримати Yangel Accelerator! Ми співпрацюємо із неприбутковими '
+                   'організаціями, бізнесом, ЗМІ та освітніми закладами. Якщо ви хочете стати нашими'
+                   ' партнерами, будь ласка, заповніть форму, щоб із вами змогли зв’язатись координатори',
+                1: 'Partnership is one of our main priorities! We collaborate with nonprofits, businesses, '
+                   'media, and educators. If you would like to become our partner, please fill the application'
+                   ' form so we can reach out to you.'},
+    'partner_opt': {0: 'Стати партнером',
+                    1: 'Become a partner'},
+    'partner_q': {'answer': {0: 'Попереду 4 запитання, які допоможуть мені визначити, як нам краще '
+                                'налаштувати співпрацю. Будь ласка, вкажіть актуальні контакти, щоб я '
+                                'могла передати їх координаторам.',
+                             1: 'Please answer the following questions. After I process'
+                                ' your data, our coordinator will reach out to you'},
+                  'name': {0: 'Як вас звати?',
+                           1: 'What is your name?'},
+                  },
+
+    #ERRORS
+    'errors': {'name': {0: "Введіть своє ім'я та фамілію коректно",
+                        1: 'Enter your name and last name properly'},
+               'email': {0: '',
+                         1: ''},
+               'idea': {0: '',
+                        1: ''},
+               'proto': {0: '',
+                         1: ''},
+               'why_we': {0: '',
+                          1: ''},
+               'expertise': {0: 'Напишіть про ваші компетенції коректно',
+                             1: 'Write your expertise properly'},
+               'experience': {0: '',
+                              1: ''},
+               'site': {0: '',
+                        1: ''},
+               },
 
 
 }
