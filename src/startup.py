@@ -1,17 +1,35 @@
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
-from variables import *
-import config as c
+from src.variables import *
+import src.config as c
 from language_set import language
-from menu import main_menu
+from src.menu import main_menu
+from src.user_manager import User, UM
 
 
-def try_again_or_mm(update, context): # try again(go to question about tech) or move to main menu
+def startuper_email(update, context):
     lang = language(update)
     answer = update.message.text
-    if answer == c.text['try_again'][lang]:
-        return tech_yes_no(update, context)
-    elif answer == c.text['to_main_menu'][lang]:
-        return main_menu(update, context)
+    UM.currentUsers[update.effective_chat.id].add_email(answer)
+    print(UM.currentUsers)
+    return startup(update, context)
+
+
+def startuper_name(update, context): # not finished
+    lang = language(update)
+    answer = update.message.text
+    try:
+        a1, a2 = answer.split()
+    except ValueError:
+        update.message.reply_text(text=c.text['errors']['name'][lang], reply_markup=ReplyKeyboardRemove())
+        return STARTUPER_NAME
+    if len(answer) >= 2 and a1.isalpha() and a2.isalpha():
+        UM.create_user(User(update.effective_chat.id))
+        UM.currentUsers[update.effective_chat.id].add_name(answer)
+        update.message.reply_text(text=c.text['startup_blank_q']['email'][lang], reply_markup=ReplyKeyboardRemove())
+        return STARTUPER_EMAIL
+    else:
+        update.message.reply_text(text=c.text['errors']['name'][lang], reply_markup=ReplyKeyboardRemove())
+        return STARTUPER_NAME
 
 
 ### team, prototype and qualification round
@@ -21,7 +39,7 @@ def q_round_yes_no(update, context):
     if answer == c.text['yes'][lang]:
         context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['startup_ans']['fifth'][lang])
         update.message.reply_text(text=c.text['startup_blank_q']['name'][lang], reply_markup=ReplyKeyboardRemove())
-        pass ##################################### fill the blank
+        return STARTUPER_NAME ##################################### fill the blank
     elif answer == c.text['to_main_menu'][lang]:
         return main_menu(update, context)
 
@@ -117,9 +135,18 @@ def tech_q(update, context): #takes the answer from the prev question, if answer
 ### tech, edu and fantastic questions
 
 
+def try_again_or_mm(update, context): # try again(go to question about tech) or move to main menu
+    lang = language(update)
+    answer = update.message.text
+    if answer == c.text['try_again'][lang]:
+        return tech_yes_no(update, context)
+    elif answer == c.text['to_main_menu'][lang]:
+        return main_menu(update, context)
+
+
 def startup(update, context):
     lang = language(update)
     reply_keyboard = [[c.text['lets_go'][lang], c.text['back'][lang]]]
     markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
     update.message.reply_text(text=c.text['startup'][lang], reply_markup=markup)
-    return TECH_OR_MM
+    return TECH_OR_MM # goes to tech_q

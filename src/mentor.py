@@ -1,12 +1,12 @@
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
-from variables import *
-import config as c
+from src.variables import *
+import src.config as c
 from language_set import language
-from menu import main_menu
+from src.menu import main_menu
 
 
 def mentor_expertise(update, context): # not finished
-    lang = language()
+    lang = language(update)
     answer = update.message.text
     if len(answer) >= 2:
         update.message.reply_text(text=c.text['mentor_q']['experience'][lang], reply_markup=ReplyKeyboardRemove())
@@ -17,7 +17,7 @@ def mentor_expertise(update, context): # not finished
 
 
 def mentor_name(update, context): # not finished
-    lang = language()
+    lang = language(update)
     answer = update.message.text
     try:
         a1, a2 = answer.split()
@@ -33,7 +33,7 @@ def mentor_name(update, context): # not finished
 
 
 def mentor_handler(update, context):
-    lang = language()
+    lang = language(update)
     answer = update.message.text
     if answer == c.text['mentor_opt'][lang]:
         context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['mentor_q']['answer'][lang])
@@ -44,7 +44,7 @@ def mentor_handler(update, context):
 
 
 def mentor(update, context):
-    lang = language()
+    lang = language(update)
     reply_keyboard = [[c.text['mentor_opt'][lang], c.text['back'][lang]]]
     markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
     update.message.reply_text(text=c.text['mentor'][lang], reply_markup=markup)

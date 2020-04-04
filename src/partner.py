@@ -1,8 +1,8 @@
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
-from variables import *
-import config as c
+from src.variables import *
+import src.config as c
 from language_set import language
-from menu import main_menu
+from src.menu import main_menu
 
 
 def partner_handler(update, context):

@@ -1,34 +1,37 @@
 from telegram import ReplyKeyboardMarkup
-from variables import *
-import config as c
+from src.variables import *
+import src.config as c
 
 from database import DbInterface
 from os import getcwd
 
 # get path of the database file and creating the manager object
 
-path = getcwd() + "/space-bot/Space_DB.db"
+path = getcwd() + "/Space_DB.db"
 db = DbInterface(path)
+
 
 def language(update):
     lang = db.getLang(update.message.chat_id)
-    if lang == None:
-        update.message.reply_text(text= c.text['start'])
+    #print(update.effective_chat.id)
+    if lang is None:
+        update.message.reply_text(text=c.text['start'])
         reply_keyboard = [[c.text['ua'], c.text['en']]]
         markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True, resize_keyboard=True)
         update.message.reply_text(text=c.text['ask_lang'], reply_markup=markup)
-        return LANG
-    return lang
+        return lang
+    else:
+        return lang
 
 
 def setting_lang(update, context):
     answer = update.message.text
-    if answer == c.text['en']:
+    if answer == c.text["en"]:
         lang = 1
-        db.setLang(update.message.chat_id, lang)
-    elif answer == c.text['ua']:
+        db.setLang(update.effective_chat.id, lang)
+    elif answer == c.text["ua"]:
         lang = 0
-        db.setLang(update.message.chat_id, lang)
+        db.setLang(update.effective_chat.id, lang)
     else:
         # if he inputs some shit we are not alowing to go further
         return language(update)

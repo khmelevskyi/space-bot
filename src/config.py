@@ -1,5 +1,7 @@
 text = {
     "start": "Hi! I’m Maryna, Yangel Accelerator onboarding bot. Ду ю спік юкрейніан?",
+    'welcome_back': {0: 'Рада знову тебе бачити!',
+                     1: 'Great to see you again!'},
 
     #LANGUAGE
     "ask_lang": "Вибери мову: / Choose the language below:",
@@ -183,8 +185,8 @@ text = {
     #ERRORS
     'errors': {'name': {0: "Введіть своє ім'я та фамілію коректно",
                         1: 'Enter your name and last name properly'},
-               'email': {0: '',
-                         1: ''},
+               'email': {0: "Введіть свій email правильно, щоб ми змогли зв'язатися з вами",
+                         1: 'Enter your email properly, so we could get in touch with you'},
                'idea': {0: '',
                         1: ''},
                'proto': {0: '',

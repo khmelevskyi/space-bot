@@ -1,4 +1,6 @@
 import sqlite3
+#from os import getcwd
+
 
 class DbInterface:
     def __init__(self, path):
@@ -47,9 +49,12 @@ class DbInterface:
     #     args = [chat_id]
     #     self.cursor.execute(sql, args)
     #     return True if self.cursor.fetchall()[0][0] == 1 else False
+    def idx(self): # creates unique indexes to make impossible to write the same chat_id in BD twi
+        sql2 = 'CREATE UNIQUE INDEX idx_Language_chat_id ON Language (chat_id)'
+        self.cursor.execute(sql2)
 
     def setLang(self, chat_id, lang):
-        sql = 'INSERT OR REPLACE INTO Language (Chat_id, lang) VALUES (?, ?)'
+        sql = 'INSERT OR REPLACE INTO Language (chat_id, lang) VALUES (?, ?)'
         args = [chat_id, lang]
         try:
             self.cursor.execute(sql, args)
@@ -59,7 +64,7 @@ class DbInterface:
             self.conn.commit()
 
     def getLang(self, chat_id):
-        sql = 'SELECT EXISTS(SELECT * from Language Where Chat_id = ?)'
+        sql = 'SELECT EXISTS(SELECT * from Language Where chat_id = ?)'
         args = [chat_id]
         # print(chat_id)
         try:
@@ -69,7 +74,7 @@ class DbInterface:
             print("error")
         if self.cursor.fetchall()[0][0] == 0:
             return None
-        sql = 'SELECT Lang from Language Where Chat_id = ?'
+        sql = 'SELECT lang from Language Where chat_id = ?'
         args = [chat_id]
         try:
             self.cursor.execute(sql, args)
@@ -81,8 +86,9 @@ class DbInterface:
 
     
 # print(getGames(0,0,0,0,0))
-# DbInterface('database.db').setLang(10,2)
-# print(DbInterface('database.db').getLang(10))
+#DbInterface(getcwd() + '/Space_DB.db').setLang(11, 0)
+#print(DbInterface(getcwd() + '/Space_DB.db').getLang(10))
+#print(DbInterface(getcwd() + '/Space_DB.db').getLang(11))
 # authorizeUser()
 # print(checkUser(100))
 # clearUsers()

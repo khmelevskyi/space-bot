@@ -1,18 +1,18 @@
 from telegram.ext import Updater, Filters, ConversationHandler, MessageHandler, CommandHandler
 from telegram import ReplyKeyboardMarkup #KeyboardButton,InlineKeyboardMarkup,InlineKeyboardButton
-from os import environ as env,getcwd # for environmental variables
+from os import environ as env, getcwd # for environmental variables
 import logging #used for error detection
 from database import DbInterface
 
-import config as c
-from variables import *
-from menu import main_menu
-from language_set import language,setting_lang
-from about_yangel import about_yangel, about_yangel_handler
-from startup import startup, tech_q, tech_yes_no, edu_yes_no, fantastic_yes_no, proto_yes_no, team_yes_no, \
-    q_round_yes_no, try_again_or_mm
-from mentor import mentor, mentor_handler, mentor_name, mentor_expertise
-from partner import partner, partner_handler
+import src.config as c
+from src.variables import *
+from src.menu import main_menu
+from language_set import language, setting_lang
+from src.about_yangel import about_yangel, about_yangel_handler
+from src.startup import startup, tech_q, tech_yes_no, edu_yes_no, fantastic_yes_no, proto_yes_no, team_yes_no, \
+    q_round_yes_no, try_again_or_mm, startuper_name, startuper_email
+from src.mentor import mentor, mentor_handler, mentor_name, mentor_expertise
+from src.partner import partner, partner_handler
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -31,10 +31,16 @@ def main_menu_handler(update, context):
     elif answer == c.text['main_menu']['fourth_option'][lang]:
         return partner(update, context)
 
+
 def start(update, context):
     """Welcome greating and proposing to choose the language"""
     lang = language(update)
-    return MAIN_MENU
+    if lang == 1 or lang == 0:
+        markup = ReplyKeyboardMarkup([[c.text['to_main_menu'][lang]]], resize_keyboard=True, one_time_keyboard=True)
+        update.message.reply_text(text=c.text['welcome_back'][lang], reply_markup=markup)
+        return MAIN_MENU
+    else:
+        return LANG
 
 
 def done(update, context):
@@ -60,7 +66,7 @@ def main():
         entry_points=[CommandHandler('start', start)],
 
         states={
-            LANG: [MessageHandler(Filters.text, setting_lang), *necessary_hendlers],
+            LANG: [MessageHandler(Filters.all, setting_lang), *necessary_hendlers],
             MAIN_MENU: [MessageHandler(Filters.all, main_menu), *necessary_hendlers],
             MAIN_MENU_HANDLER: [MessageHandler(Filters.all, main_menu_handler), *necessary_hendlers],
             ABOUT_YANGEL: [MessageHandler(Filters.all, about_yangel), *necessary_hendlers],
@@ -74,8 +80,8 @@ def main():
             TRY_AGAIN_OR_MM: [MessageHandler(Filters.text, try_again_or_mm), *necessary_hendlers],
             FANTASTIC_YES_NO: [MessageHandler(Filters.text, fantastic_yes_no), *necessary_hendlers],
             Q_ROUND_YES_NO: [MessageHandler(Filters.text, q_round_yes_no), *necessary_hendlers],
-            STARTUPER_NAME: [],
-            STARTUPER_EMAIL: [],
+            STARTUPER_NAME: [MessageHandler(Filters.text, startuper_name), *necessary_hendlers],
+            STARTUPER_EMAIL: [MessageHandler(Filters.text, startuper_email), *necessary_hendlers],
             STARTUPER_IDEA: [],
             STARTUPER_PROTO: [],
             STARTUPER_WHY: [],
