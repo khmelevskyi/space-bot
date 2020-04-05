@@ -2,21 +2,22 @@ from telegram.ext import Updater, Filters, ConversationHandler, MessageHandler, 
 from telegram import ReplyKeyboardMarkup #KeyboardButton,InlineKeyboardMarkup,InlineKeyboardButton
 from os import environ as env, getcwd # for environmental variables
 import logging #used for error detection
+
+import config as c
 from database import DbInterface
-
-import src.config as c
-from src.variables import *
-from src.menu import main_menu
-from language_set import language, setting_lang
-from src.about_yangel import about_yangel, about_yangel_handler
-from src.startup import startup, tech_q, tech_yes_no, edu_yes_no, fantastic_yes_no, proto_yes_no, team_yes_no, \
-    q_round_yes_no, try_again_or_mm, startuper_name, startuper_email, startuper_idea, startuper_proto, \
-    startuper_why_we, startuper_final_q
-from src.mentor import mentor, mentor_handler, mentor_name, mentor_expertise, mentor_experience, mentor_site, \
-    mentor_email, mentor_final_q
-from src.partner import partner, partner_handler, partner_name, partner_org_name, partner_org_pos, partner_email, \
-    partner_final_q
-
+from Logic.language_set import language, setting_lang
+from variables import *
+from Logic.menu import main_menu
+from Logic.about_yangel import about_yangel, about_yangel_handler
+from Logic.mentor import mentor, mentor_handler, mentor_name, mentor_expertise, \
+                        mentor_experience, mentor_site, mentor_email, mentor_final_q
+from Logic.partner import partner, partner_handler, partner_name, partner_org_name, \
+                        partner_org_pos, partner_email, partner_final_q
+from Logic.startup import startup, tech_q, tech_yes_no, edu_yes_no, \
+                        fantastic_yes_no, proto_yes_no, team_yes_no, \
+                        q_round_yes_no, try_again_or_mm, startuper_name, \
+                        startuper_email, startuper_idea, startuper_proto, \
+                        startuper_why_we, startuper_final_q
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)

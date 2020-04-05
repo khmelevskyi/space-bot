@@ -1,7 +1,7 @@
 from telegram import ReplyKeyboardMarkup
-import src.config as c
-from src.variables import *
-from language_set import language
+import config as c
+from variables import *
+from Logic.language_set import language
 
 
 def main_menu(update, context):
