@@ -32,10 +32,9 @@ class UserManager:
             print(f'[WARNING]DELETING UNEXISTING USER {chat_id}')
 
     def create_user(self, user):
-        if user.chat_id not in self.currentUsers:
-            self.currentUsers[user.chat_id] = user
-        else:
-            print('ADDING EXISTING USER')
+        self.currentUsers[user.chat_id] = user
+
+
     # Users stored in dictionary with keys as
     # Structure {
     #   user_id: User-class object
@@ -44,16 +43,32 @@ class UserManager:
 
 
 class User:
-    def __init__(self, chat_id):
+    def __init__(self, chat_id, name, specialization):
         self.chat_id = chat_id
-        self.name = ()
+        self.name = name
         self.email = ()
-        self.questions = ()
-        self.answers = {}
+        self.specialization = specialization
+        self.idea = ()
+        self.prototype = ()
+        self.why_we = ()
+        self.expertise = ()
+        self.experience = ()
+        self.site = ()
+        self.organization_name = ()
+        self.organization_position = ()
         self.lastActivityTime = time.time()
 
     def __repr__(self):
-        return f'Name&lastname: {self.name}\nEmail: {self.email}\n'
+        if self.specialization == 'startuper':
+            return f'Startuper: Name & last name: {self.name}\nEmail: {self.email}\n' \
+                   f'Idea: {self.idea}\nPrototype: {self.prototype}\n' \
+                   f'Why needs an acceleration program: {self.why_we}\n'
+        elif self.specialization == 'mentor':
+            return f'Mentor: Name & last name: {self.name}\nEmail: {self.email}\n' \
+                   f'Site: {self.site}\nExpertise: {self.expertise}\nExperience: {self.experience}\n'
+        elif self.specialization == 'partner':
+            return f'Partner: Name & last name: {self.name}\nEmail: {self.email}\n' \
+                   f'Organization: {self.organization_name}\nPosition there: {self.organization_position}\n'
 
     def refresh_action(func):
         def wrapper_refresh_time(self, *args, **kwargs):
@@ -66,15 +81,55 @@ class User:
     def update_time(self):
         self.lastActivityTime = time.time()
 
-    @refresh_action
-    def add_name(self, name):
-        self.name = name
-        return name
+    def get_name(self):
+        n1, n2 = self.name.split()
+        return n1
 
     @refresh_action
     def add_email(self, email):
         self.email = email
         return email
+
+    @refresh_action
+    def add_idea(self, idea):
+        self.idea = idea
+        return idea
+
+    @refresh_action
+    def add_prototype(self, prototype):
+        self.prototype = prototype
+        return prototype
+
+    @refresh_action
+    def add_why_we(self, why_we):
+        self.why_we = why_we
+        return why_we
+
+    @refresh_action
+    def add_expertise(self, expertise):
+        self.expertise = expertise
+        return expertise
+
+    @refresh_action
+    def add_experience(self, experience):
+        self.experience = experience
+        return experience
+
+    @refresh_action
+    def add_site(self, site):
+        self.site = site
+        return site
+
+    @refresh_action
+    def add_organization_name(self, organization_name):
+        self.organization_name = organization_name
+        return organization_name
+
+    @refresh_action
+    def add_organization_position(self, organization_position):
+        self.organization_position = organization_position
+        return organization_position
+
 
 UM = UserManager()
 # if __name__ == "__main__":

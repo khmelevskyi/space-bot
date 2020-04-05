@@ -6,12 +6,68 @@ from src.menu import main_menu
 from src.user_manager import User, UM
 
 
+def startuper_final_q(update, context):
+    lang = language(update)
+    answer = update.message.text
+    if answer == c.text['final_option'][lang]:
+        context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['final_answer'][lang])
+        print(UM.currentUsers)
+        return main_menu(update, context)
+    elif answer == c.text['to_main_menu'][lang]:
+        print(UM.currentUsers)
+        return main_menu(update, context)
+
+
+def startuper_why_we(update, context):
+    lang = language(update)
+    answer = update.message.text
+    if len(answer) >= 2:
+        UM.currentUsers[update.effective_chat.id].add_why_we(answer)
+        reply_keyboard = [[c.text['final_option'][lang], c.text['to_main_menu'][lang]]]
+        markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
+        update.message.reply_text(text=c.text['startup_blank_q']['final_q'][lang].
+                                  format(name=UM.currentUsers[update.effective_chat.id].get_name()),
+                                  reply_markup=markup)
+        return STARTUPER_FINAL_Q
+    else:
+        update.message.reply_text(text=c.text['errors']['why_we'][lang], reply_markup=ReplyKeyboardRemove())
+        return STARTUPER_WHY
+
+
+def startuper_proto(update, context):
+    lang = language(update)
+    answer = update.message.text
+    if len(answer) >= 2:
+        UM.currentUsers[update.effective_chat.id].add_prototype(answer)
+        update.message.reply_text(text=c.text['startup_blank_q']['why_we'][lang], reply_markup=ReplyKeyboardRemove())
+        return STARTUPER_WHY
+    else:
+        update.message.reply_text(text=c.text['errors']['proto'][lang], reply_markup=ReplyKeyboardRemove())
+        return STARTUPER_PROTO
+
+
+def startuper_idea(update, context):
+    lang = language(update)
+    answer = update.message.text
+    if len(answer) >= 5:
+        UM.currentUsers[update.effective_chat.id].add_idea(answer)
+        update.message.reply_text(text=c.text['startup_blank_q']['proto'][lang], reply_markup=ReplyKeyboardRemove())
+        return STARTUPER_PROTO
+    else:
+        update.message.reply_text(text=c.text['errors']['idea'][lang], reply_markup=ReplyKeyboardRemove())
+        return STARTUPER_IDEA
+
+
 def startuper_email(update, context):
     lang = language(update)
     answer = update.message.text
-    UM.currentUsers[update.effective_chat.id].add_email(answer)
-    print(UM.currentUsers)
-    return startup(update, context)
+    if len(answer) >= 3 and answer.count('@') == 1:
+        UM.currentUsers[update.effective_chat.id].add_email(answer)
+        update.message.reply_text(text=c.text['startup_blank_q']['idea'][lang], reply_markup=ReplyKeyboardRemove())
+        return STARTUPER_IDEA
+    else:
+        update.message.reply_text(text=c.text['errors']['email'][lang], reply_markup=ReplyKeyboardRemove())
+        return STARTUPER_EMAIL
 
 
 def startuper_name(update, context): # not finished
@@ -23,8 +79,7 @@ def startuper_name(update, context): # not finished
         update.message.reply_text(text=c.text['errors']['name'][lang], reply_markup=ReplyKeyboardRemove())
         return STARTUPER_NAME
     if len(answer) >= 2 and a1.isalpha() and a2.isalpha():
-        UM.create_user(User(update.effective_chat.id))
-        UM.currentUsers[update.effective_chat.id].add_name(answer)
+        UM.create_user(User(update.effective_chat.id, answer.title(), 'startuper'))
         update.message.reply_text(text=c.text['startup_blank_q']['email'][lang], reply_markup=ReplyKeyboardRemove())
         return STARTUPER_EMAIL
     else:

@@ -30,6 +30,12 @@ text = {
     'lets_go': {0: "Вперед",
                 1: "Let's go"},
 
+    #FINAL ANSWER
+    'final_option': {0: 'Дякую, на все добре!',
+                     1: 'Thank you, bye!'},
+    'final_answer': {0: 'Дякую за спілкування. Ви просто космос!',
+                     1: 'See you later!'},
+
     #TRY_AGAIN
     'try_again': {0: 'Спробувати ще раз',
                   1: 'Try one more time'},
@@ -180,6 +186,14 @@ text = {
                                 ' your data, our coordinator will reach out to you'},
                   'name': {0: 'Як вас звати?',
                            1: 'What is your name?'},
+                  'organization_name': {0: 'Як називається ваша організація?',
+                                        1: 'What is the name of your organization?'},
+                  'organization_position': {0: 'Яка ваша посада в цій організації?',
+                                            1: 'What is your position in this organization?'},
+                  'email': {0: 'Вкажіть e-mail, будь ласка',
+                            1: 'What is your email?'},
+                  'final_q': {0: 'Дякую за відповіді, {name}! Я можу ще чимось бути корисна?',
+                              1: 'Thank you, {name}! Can I do anything else for you?'}
                   },
 
     #ERRORS
@@ -187,17 +201,21 @@ text = {
                         1: 'Enter your name and last name properly'},
                'email': {0: "Введіть свій email правильно, щоб ми змогли зв'язатися з вами",
                          1: 'Enter your email properly, so we could get in touch with you'},
-               'idea': {0: '',
-                        1: ''},
-               'proto': {0: '',
-                         1: ''},
-               'why_we': {0: '',
-                          1: ''},
-               'expertise': {0: 'Напишіть про ваші компетенції коректно',
-                             1: 'Write your expertise properly'},
-               'experience': {0: '',
-                              1: ''},
-               'site': {0: '',
-                        1: ''},
-               },
-}
+               'idea': {0: 'Розпишіть, будь ласка, ідею свого стартапу в декілька речень',
+                        1: 'Write your idea down at least in a few sentences'},
+               'proto': {0: 'Напишіть більше про те, що являє собою прототип вашого продукту',
+                         1: 'Write down a little bit more about what your prototype looks like'},
+               'why_we': {0: 'Напишіть про те, навіщо саме вам наша акселераційна програма подробніше',
+                          1: 'Write down in more details why you need our acceleration program, please'},
+               'expertise': {0: 'Напишіть про ваші компетенції подробніше',
+                             1: 'Write down in more details about your expertise, please'},
+               'experience': {0: 'Напишіть про ваш досвід подробніше',
+                              1: 'Write down more about your experience, please'},
+               'site': {0: 'Введіть назву вашого сайту або LinkedIn коректно',
+                        1: 'Enter the name of your site or LinkedIn properly'},
+               'organization_name': {0: 'Введіть назву вашої організації коректно',
+                                     1: 'Enter the name of your organization properly'},
+               'organization_position': {0: 'Введіть назву вашої позиції коректно',
+                                         1: "Enter your position's name properly"}
+               }
+        }
