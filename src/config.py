@@ -40,6 +40,12 @@ text = {
     'try_again': {0: 'Спробувати ще раз',
                   1: 'Try one more time'},
 
+    #TIMEOUT
+    'timeout': {0: 'Ви ще не забули про реєстрацію?\nЯкщо хочете продовжити - введіть відповідь на отсаннє питання\n'
+                   'Якщо ні - введіть команду /start',
+                1: "Didn't you forget about your registration yet?\nIf you want to continue - enter the answer for"
+                   " the last question\nIf you don't - enter the command /start"},
+
     #MAIN_MENU
     'help_ask': {0: 'Чим я можу бути корисна?\nГоловне меню:',
                  1: 'Let’s see how I can help you today\nMain menu:'},

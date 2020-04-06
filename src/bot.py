@@ -1,10 +1,11 @@
-from telegram.ext import Updater, Filters, ConversationHandler, MessageHandler, CommandHandler
+from telegram.ext import Updater, Filters, ConversationHandler, MessageHandler, CommandHandler, Handler
 from telegram import ReplyKeyboardMarkup #KeyboardButton,InlineKeyboardMarkup,InlineKeyboardButton
 from os import environ as env, getcwd # for environmental variables
 import logging #used for error detection
 
 import src.config as c
 from src.database import DbInterface
+from src.user_manager import UM
 from src.Logic.language_set import language, setting_lang
 from src.variables import *
 from src.Logic.menu import main_menu
@@ -23,6 +24,13 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
+def admin(update, context):
+    pass
+
+
+
+
+
 def main_menu_handler(update, context):
     lang = language(update)
     answer = update.message.text
@@ -39,6 +47,8 @@ def main_menu_handler(update, context):
 def start(update, context):
     """Welcome greating and proposing to choose the language"""
     lang = language(update)
+    if update.effective_chat.id in UM.currentUsers:
+        del UM.currentUsers[update.effective_chat.id]
     if lang == 1 or lang == 0:
         markup = ReplyKeyboardMarkup([[c.text['to_main_menu'][lang]]], resize_keyboard=True, one_time_keyboard=True)
         update.message.reply_text(text=c.text['welcome_back'][lang], reply_markup=markup)
@@ -48,7 +58,7 @@ def start(update, context):
 
 
 def done(update, context):
-    update.message.reply_text('END')
+    #context.bot.send_message('Your message was not recognized')
     return ConversationHandler.END
 
 
@@ -64,7 +74,8 @@ def main():
     dispatcher = updater.dispatcher
 
     necessary_handlers = [CommandHandler('start', start),
-                          CommandHandler('stop', done)]
+                          CommandHandler('stop', done),
+                          CommandHandler('admin', admin)],
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
@@ -103,12 +114,11 @@ def main():
             PARTNER_ORG_NAME: [MessageHandler(Filters.text, partner_org_name), *necessary_handlers],
             PARTNER_ORG_POS: [MessageHandler(Filters.text, partner_org_pos), *necessary_handlers],
             PARTNER_EMAIL: [MessageHandler(Filters.all, partner_email), *necessary_handlers],
-            PARTNER_FINAL_Q: [MessageHandler(Filters.text, partner_final_q), *necessary_handlers]
+            PARTNER_FINAL_Q: [MessageHandler(Filters.text, partner_final_q), *necessary_handlers],
 
         },
-        conversation_timeout=1800,
 
-        fallbacks=[CommandHandler('stop', done)],
+        fallbacks=[CommandHandler('stop', done)], allow_reentry=True
     )
     dispatcher.add_handler(conv_handler)
 

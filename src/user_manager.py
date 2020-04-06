@@ -2,12 +2,16 @@ import time
 import functools
 import threading
 from time import sleep
+from src.variables import *
+from telegram.ext import CallbackContext
+from src.Logic.language_set import language
+import src.config as c
 
 
 class UserManager:
 
     def __init__(self):
-        self.user_removal_time = 1800
+        self.user_removal_time = 10
         self.currentUsers = {}
         self.userthread = threading.Thread(target=self.__remove_old_users)
         self.userthread.start()
@@ -19,11 +23,20 @@ class UserManager:
             print(self.currentUsers)
             users_to_delete = []
             for user in self.currentUsers.values():
-                if time.time() - user.lastActivityTime > self.user_removal_time:
-                    users_to_delete.append(user.chat_id)
-            for id in users_to_delete:
-                self.delete_user(id)
-                print('deleting user')
+                for item in user.get_all_items(): # fix it!!!!!!!!!!!
+                    if time.time() - user.lastActivityTime > self.user_removal_time and item is None:
+                        update = user.update
+                        context = user.context
+                        return UserManager.notificate_user(update, context)
+                    #users_to_delete.append(user.chat_id)
+            #for id in users_to_delete:
+                #self.delete_user(id)
+                #print('deleting user')
+    @staticmethod
+    def notificate_user(update, context):
+        lang = language(update)
+        context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['timeout'][lang])
+        return UserManager.__remove_old_users(UM)
 
     def delete_user(self, chat_id):
         if chat_id in self.currentUsers:
@@ -42,10 +55,14 @@ class UserManager:
 
 
 class User:
-    def __init__(self, chat_id, name, specialization):
+    def __init__(self, chat_id, name, specialization, update, context):
         self.chat_id = chat_id
         self.name = name
         self.specialization = specialization
+        self.email = None
+        self.update = update
+        self.context = context
+        self.lastActivityTime = time.time()
 
     def refresh_action(func):
         def wrapper_refresh_time(self, *args, **kwargs):
@@ -71,7 +88,6 @@ class User:
 class Startuper(User):
     def __init__(self, chat_id, name, specialization):
         super().__init__(chat_id, name, specialization)
-        self.email = ()
         self.idea = ()
         self.prototype = ()
         self.why_we = ()
@@ -106,6 +122,7 @@ class Mentor(User):
         self.expertise = ()
         self.experience = ()
         self.site = ()
+        self.all_items = [self.name, self.email, self.expertise, self.experience, self.site]
 
     def __repr__(self):
         return f'Mentor: Name & last name: {self.name}\nEmail: {self.email}\n' \
@@ -131,11 +148,11 @@ class Mentor(User):
 
 
 class Partner(User):
-    def __init__(self, chat_id, name, specialization):
-        super().__init__(chat_id, name, specialization)
-        self.organization_name = ()
-        self.organization_position = ()
-        self.lastActivityTime = time.time()
+    def __init__(self, chat_id, name, specialization, update, context):
+        super().__init__(chat_id, name, specialization, update, context)
+        self.organization_name = None
+        self.organization_position = None
+        self.all_items = [self.name, self.email, self.organization_name, self.organization_position]
 
     def __repr__(self):
         return f'Partner: Name & last name: {self.name}\nEmail: {self.email}\n' \
@@ -143,6 +160,9 @@ class Partner(User):
 
     def refresh_action(func):
         return User.refresh_action(func)
+
+    def get_all_items(self):
+        return [self.name, self.email, self.organization_name, self.organization_position]
 
     @refresh_action
     def add_organization_name(self, organization_name):

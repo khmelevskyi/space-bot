@@ -66,7 +66,7 @@ def partner_name(update, context):
         update.message.reply_text(text=c.text['errors']['name'][lang], reply_markup=ReplyKeyboardRemove())
         return PARTNER_NAME
     if len(answer) >= 2 and a1.isalpha() and a2.isalpha():
-        UM.create_user(Partner(update.effective_chat.id, answer.title(), 'partner'))
+        UM.create_user(Partner(update.effective_chat.id, answer.title(), 'partner', update, context))
         update.message.reply_text(text=c.text['partner_q']['organization_name'][lang], reply_markup=ReplyKeyboardRemove())
         return PARTNER_ORG_NAME
     else:
