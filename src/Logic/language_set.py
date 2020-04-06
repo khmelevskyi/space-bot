@@ -1,8 +1,8 @@
 from telegram import ReplyKeyboardMarkup
-from variables import *
-import config as c
+from src.variables import *
+import src.config as c
 
-from database import DbInterface
+from src.database import DbInterface
 from os import getcwd
 
 # get path of the database file and creating the manager object

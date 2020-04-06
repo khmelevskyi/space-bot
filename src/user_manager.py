@@ -39,36 +39,13 @@ class UserManager:
     # Structure {
     #   user_id: User-class object
     # }
-    # chat_id
 
 
 class User:
     def __init__(self, chat_id, name, specialization):
         self.chat_id = chat_id
         self.name = name
-        self.email = ()
         self.specialization = specialization
-        self.idea = ()
-        self.prototype = ()
-        self.why_we = ()
-        self.expertise = ()
-        self.experience = ()
-        self.site = ()
-        self.organization_name = ()
-        self.organization_position = ()
-        self.lastActivityTime = time.time()
-
-    def __repr__(self):
-        if self.specialization == 'startuper':
-            return f'Startuper: Name & last name: {self.name}\nEmail: {self.email}\n' \
-                   f'Idea: {self.idea}\nPrototype: {self.prototype}\n' \
-                   f'Why needs an acceleration program: {self.why_we}\n'
-        elif self.specialization == 'mentor':
-            return f'Mentor: Name & last name: {self.name}\nEmail: {self.email}\n' \
-                   f'Site: {self.site}\nExpertise: {self.expertise}\nExperience: {self.experience}\n'
-        elif self.specialization == 'partner':
-            return f'Partner: Name & last name: {self.name}\nEmail: {self.email}\n' \
-                   f'Organization: {self.organization_name}\nPosition there: {self.organization_position}\n'
 
     def refresh_action(func):
         def wrapper_refresh_time(self, *args, **kwargs):
@@ -90,6 +67,23 @@ class User:
         self.email = email
         return email
 
+
+class Startuper(User):
+    def __init__(self, chat_id, name, specialization):
+        super().__init__(chat_id, name, specialization)
+        self.email = ()
+        self.idea = ()
+        self.prototype = ()
+        self.why_we = ()
+
+    def __repr__(self):
+        return f'Startuper: Name & last name: {self.name}\nEmail: {self.email}\n' \
+               f'Idea: {self.idea}\nPrototype: {self.prototype}\n' \
+               f'Why needs an acceleration program: {self.why_we}\n'
+
+    def refresh_action(func):
+        return User.refresh_action(func)
+
     @refresh_action
     def add_idea(self, idea):
         self.idea = idea
@@ -105,6 +99,21 @@ class User:
         self.why_we = why_we
         return why_we
 
+
+class Mentor(User):
+    def __init__(self, chat_id, name, specialization):
+        super().__init__(chat_id, name, specialization)
+        self.expertise = ()
+        self.experience = ()
+        self.site = ()
+
+    def __repr__(self):
+        return f'Mentor: Name & last name: {self.name}\nEmail: {self.email}\n' \
+               f'Site: {self.site}\nExpertise: {self.expertise}\nExperience: {self.experience}\n'
+
+    def refresh_action(func):
+        return User.refresh_action(func)
+
     @refresh_action
     def add_expertise(self, expertise):
         self.expertise = expertise
@@ -119,6 +128,21 @@ class User:
     def add_site(self, site):
         self.site = site
         return site
+
+
+class Partner(User):
+    def __init__(self, chat_id, name, specialization):
+        super().__init__(chat_id, name, specialization)
+        self.organization_name = ()
+        self.organization_position = ()
+        self.lastActivityTime = time.time()
+
+    def __repr__(self):
+        return f'Partner: Name & last name: {self.name}\nEmail: {self.email}\n' \
+               f'Organization: {self.organization_name}\nPosition there: {self.organization_position}\n'
+
+    def refresh_action(func):
+        return User.refresh_action(func)
 
     @refresh_action
     def add_organization_name(self, organization_name):

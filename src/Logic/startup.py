@@ -1,9 +1,9 @@
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
-from variables import *
-import config as c
-from Logic.language_set import language
-from Logic.menu import main_menu
-from user_manager import User, UM
+from src.variables import *
+import src.config as c
+from src.Logic.language_set import language
+from src.Logic.menu import main_menu
+from src.user_manager import UM, Startuper
 
 
 def startuper_final_q(update, context):
@@ -79,7 +79,7 @@ def startuper_name(update, context): # not finished
         update.message.reply_text(text=c.text['errors']['name'][lang], reply_markup=ReplyKeyboardRemove())
         return STARTUPER_NAME
     if len(answer) >= 2 and a1.isalpha() and a2.isalpha():
-        UM.create_user(User(update.effective_chat.id, answer.title(), 'startuper'))
+        UM.create_user(Startuper(update.effective_chat.id, answer.title(), 'startuper'))
         update.message.reply_text(text=c.text['startup_blank_q']['email'][lang], reply_markup=ReplyKeyboardRemove())
         return STARTUPER_EMAIL
     else:

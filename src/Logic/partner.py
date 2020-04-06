@@ -1,9 +1,9 @@
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
-from variables import *
-import config as c
-from Logic.language_set import language
-from Logic.menu import main_menu
-from user_manager import UM, User
+from src.variables import *
+import src.config as c
+from src.Logic.language_set import language
+from src.Logic.menu import main_menu
+from src.user_manager import UM, Partner
 
 
 def partner_final_q(update, context):
@@ -66,7 +66,7 @@ def partner_name(update, context):
         update.message.reply_text(text=c.text['errors']['name'][lang], reply_markup=ReplyKeyboardRemove())
         return PARTNER_NAME
     if len(answer) >= 2 and a1.isalpha() and a2.isalpha():
-        UM.create_user(User(update.effective_chat.id, answer.title(), 'partner'))
+        UM.create_user(Partner(update.effective_chat.id, answer.title(), 'partner'))
         update.message.reply_text(text=c.text['partner_q']['organization_name'][lang], reply_markup=ReplyKeyboardRemove())
         return PARTNER_ORG_NAME
     else:
