@@ -77,7 +77,7 @@ def mentor_name(update, context):
         update.message.reply_text(text=c.text['errors']['name'][lang], reply_markup=ReplyKeyboardRemove())
         return MENTOR_NAME
     if len(answer) >= 2 and a1.isalpha() and a2.isalpha():
-        UM.create_user(Mentor(update.effective_chat.id, answer.title(), 'mentor'))
+        UM.create_user(Mentor(update.effective_chat.id, answer.title(), 'mentor', update, context))
         update.message.reply_text(text=c.text['mentor_q']['expertise'][lang], reply_markup=ReplyKeyboardRemove())
         return MENTOR_EXPERTISE
     else:

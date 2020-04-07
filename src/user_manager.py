@@ -23,11 +23,10 @@ class UserManager:
             print(self.currentUsers)
             users_to_delete = []
             for user in self.currentUsers.values():
-                for item in user.get_all_items(): # fix it!!!!!!!!!!!
-                    if time.time() - user.lastActivityTime > self.user_removal_time and item is None:
-                        update = user.update
-                        context = user.context
-                        return UserManager.notificate_user(update, context)
+                if time.time() - user.lastActivityTime > self.user_removal_time and user.get_last_item() is None:
+                    update = user.update
+                    context = user.context
+                    return UserManager.notificate_user(update, context)
                     #users_to_delete.append(user.chat_id)
             #for id in users_to_delete:
                 #self.delete_user(id)
@@ -86,11 +85,11 @@ class User:
 
 
 class Startuper(User):
-    def __init__(self, chat_id, name, specialization):
-        super().__init__(chat_id, name, specialization)
-        self.idea = ()
-        self.prototype = ()
-        self.why_we = ()
+    def __init__(self, chat_id, name, specialization, update, context):
+        super().__init__(chat_id, name, specialization, update, context)
+        self.idea = None
+        self.prototype = None
+        self.why_we = None
 
     def __repr__(self):
         return f'Startuper: Name & last name: {self.name}\nEmail: {self.email}\n' \
@@ -115,14 +114,16 @@ class Startuper(User):
         self.why_we = why_we
         return why_we
 
+    def get_last_item(self):
+        return self.why_we
+
 
 class Mentor(User):
-    def __init__(self, chat_id, name, specialization):
-        super().__init__(chat_id, name, specialization)
-        self.expertise = ()
-        self.experience = ()
-        self.site = ()
-        self.all_items = [self.name, self.email, self.expertise, self.experience, self.site]
+    def __init__(self, chat_id, name, specialization, update, context):
+        super().__init__(chat_id, name, specialization, update, context)
+        self.expertise = None
+        self.experience = None
+        self.site = None
 
     def __repr__(self):
         return f'Mentor: Name & last name: {self.name}\nEmail: {self.email}\n' \
@@ -145,6 +146,9 @@ class Mentor(User):
     def add_site(self, site):
         self.site = site
         return site
+
+    def get_last_item(self):
+        return self.email
 
 
 class Partner(User):
@@ -173,6 +177,9 @@ class Partner(User):
     def add_organization_position(self, organization_position):
         self.organization_position = organization_position
         return organization_position
+
+    def get_last_item(self):
+        return self.email
 
 
 UM = UserManager()

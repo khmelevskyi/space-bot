@@ -79,7 +79,7 @@ def startuper_name(update, context): # not finished
         update.message.reply_text(text=c.text['errors']['name'][lang], reply_markup=ReplyKeyboardRemove())
         return STARTUPER_NAME
     if len(answer) >= 2 and a1.isalpha() and a2.isalpha():
-        UM.create_user(Startuper(update.effective_chat.id, answer.title(), 'startuper'))
+        UM.create_user(Startuper(update.effective_chat.id, answer.title(), 'startuper', update, context))
         update.message.reply_text(text=c.text['startup_blank_q']['email'][lang], reply_markup=ReplyKeyboardRemove())
         return STARTUPER_EMAIL
     else:
