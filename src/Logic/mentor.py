@@ -4,6 +4,7 @@ import src.config as c
 from src.Logic.language_set import language
 from src.Logic.menu import main_menu
 from src.user_manager import UM, Mentor
+from src.Logic.verification import *
 
 
 def mentor_final_q(update, context):
@@ -19,7 +20,8 @@ def mentor_final_q(update, context):
 def mentor_email(update, context):
     lang = language(update)
     answer = update.message.text
-    if len(answer) >= 3 and answer.count('@') == 1:
+    check = email_check(answer)
+    if check:
         UM.currentUsers[update.effective_chat.id].add_email(answer)
         reply_keyboard = [[c.text['final_option'][lang], c.text['to_main_menu'][lang]]]
         markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
@@ -35,7 +37,8 @@ def mentor_email(update, context):
 def mentor_site(update, context):
     lang = language(update)
     answer = update.message.text
-    if len(answer) >= 3:
+    check = site_check(answer)
+    if check:
         UM.currentUsers[update.effective_chat.id].add_site(answer)
         update.message.reply_text(text=c.text['mentor_q']['email'][lang], reply_markup=ReplyKeyboardRemove())
         return MENTOR_EMAIL
@@ -47,7 +50,8 @@ def mentor_site(update, context):
 def mentor_experience(update, context):
     lang = language(update)
     answer = update.message.text
-    if len(answer) >= 5:
+    check = experience_check(answer)
+    if check:
         UM.currentUsers[update.effective_chat.id].add_experience(answer)
         update.message.reply_text(text=c.text['mentor_q']['site'][lang], reply_markup=ReplyKeyboardRemove())
         return MENTOR_SITE
@@ -59,7 +63,8 @@ def mentor_experience(update, context):
 def mentor_expertise(update, context):
     lang = language(update)
     answer = update.message.text
-    if len(answer) >= 2:
+    check = expertise_check(answer)
+    if check:
         UM.currentUsers[update.effective_chat.id].add_expertise(answer)
         update.message.reply_text(text=c.text['mentor_q']['experience'][lang], reply_markup=ReplyKeyboardRemove())
         return MENTOR_EXPERIENCE
@@ -71,12 +76,8 @@ def mentor_expertise(update, context):
 def mentor_name(update, context):
     lang = language(update)
     answer = update.message.text
-    try:
-        a1, a2 = answer.split()
-    except ValueError:
-        update.message.reply_text(text=c.text['errors']['name'][lang], reply_markup=ReplyKeyboardRemove())
-        return MENTOR_NAME
-    if len(answer) >= 2 and a1.isalpha() and a2.isalpha():
+    check = name_check(answer)
+    if check:
         UM.create_user(Mentor(update.effective_chat.id, answer.title(), 'mentor', update, context))
         update.message.reply_text(text=c.text['mentor_q']['expertise'][lang], reply_markup=ReplyKeyboardRemove())
         return MENTOR_EXPERTISE

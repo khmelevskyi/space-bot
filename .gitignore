@@ -130,5 +130,7 @@ dmypy.json
 __init__.py
 lang_set.py
 startup_menu.py
+Space_DB.db
+Space_DB.db.sqbpro
 .idea
 some_file

@@ -11,7 +11,7 @@ import src.config as c
 class UserManager:
 
     def __init__(self):
-        self.user_removal_time = 10
+        self.user_removal_time = 1800
         self.currentUsers = {}
         self.userthread = threading.Thread(target=self.__remove_old_users)
         self.userthread.start()
@@ -21,16 +21,18 @@ class UserManager:
             sleep(self.user_removal_time)
             print('deleteCycle')
             print(self.currentUsers)
-            users_to_delete = []
+            users_to_send_and_delete = []
             for user in self.currentUsers.values():
                 if time.time() - user.lastActivityTime > self.user_removal_time and user.get_last_item() is None:
                     update = user.update
                     context = user.context
                     return UserManager.notificate_user(update, context)
-                    #users_to_delete.append(user.chat_id)
-            #for id in users_to_delete:
-                #self.delete_user(id)
-                #print('deleting user')
+                elif time.time() - user.lastActivityTime > self.user_removal_time and user.get_last_item() is not None:
+                    users_to_send_and_delete.append(user.chat_id)
+            for id in users_to_send_and_delete:
+                #return send_data()   -  the func that takes the data and send it via email
+                self.delete_user(id)
+                print('deleting user')
     @staticmethod
     def notificate_user(update, context):
         lang = language(update)

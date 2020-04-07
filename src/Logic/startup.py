@@ -4,6 +4,7 @@ import src.config as c
 from src.Logic.language_set import language
 from src.Logic.menu import main_menu
 from src.user_manager import UM, Startuper
+from src.Logic.verification import *
 
 
 def startuper_final_q(update, context):
@@ -21,7 +22,8 @@ def startuper_final_q(update, context):
 def startuper_why_we(update, context):
     lang = language(update)
     answer = update.message.text
-    if len(answer) >= 2:
+    check = wdynp_check(answer)
+    if check:
         UM.currentUsers[update.effective_chat.id].add_why_we(answer)
         reply_keyboard = [[c.text['final_option'][lang], c.text['to_main_menu'][lang]]]
         markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
@@ -37,7 +39,8 @@ def startuper_why_we(update, context):
 def startuper_proto(update, context):
     lang = language(update)
     answer = update.message.text
-    if len(answer) >= 2:
+    check = prototype_check(answer)
+    if check:
         UM.currentUsers[update.effective_chat.id].add_prototype(answer)
         update.message.reply_text(text=c.text['startup_blank_q']['why_we'][lang], reply_markup=ReplyKeyboardRemove())
         return STARTUPER_WHY
@@ -49,7 +52,8 @@ def startuper_proto(update, context):
 def startuper_idea(update, context):
     lang = language(update)
     answer = update.message.text
-    if len(answer) >= 5:
+    check = idea_check(answer)
+    if check:
         UM.currentUsers[update.effective_chat.id].add_idea(answer)
         update.message.reply_text(text=c.text['startup_blank_q']['proto'][lang], reply_markup=ReplyKeyboardRemove())
         return STARTUPER_PROTO
@@ -61,7 +65,8 @@ def startuper_idea(update, context):
 def startuper_email(update, context):
     lang = language(update)
     answer = update.message.text
-    if len(answer) >= 3 and answer.count('@') == 1:
+    check = email_check(answer)
+    if check:
         UM.currentUsers[update.effective_chat.id].add_email(answer)
         update.message.reply_text(text=c.text['startup_blank_q']['idea'][lang], reply_markup=ReplyKeyboardRemove())
         return STARTUPER_IDEA
@@ -73,12 +78,8 @@ def startuper_email(update, context):
 def startuper_name(update, context): # not finished
     lang = language(update)
     answer = update.message.text
-    try:
-        a1, a2 = answer.split()
-    except ValueError:
-        update.message.reply_text(text=c.text['errors']['name'][lang], reply_markup=ReplyKeyboardRemove())
-        return STARTUPER_NAME
-    if len(answer) >= 2 and a1.isalpha() and a2.isalpha():
+    check = name_check(answer)
+    if check:
         UM.create_user(Startuper(update.effective_chat.id, answer.title(), 'startuper', update, context))
         update.message.reply_text(text=c.text['startup_blank_q']['email'][lang], reply_markup=ReplyKeyboardRemove())
         return STARTUPER_EMAIL
