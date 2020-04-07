@@ -8,7 +8,7 @@ from src.database import DbInterface
 from src.user_manager import UM
 from src.Logic.language_set import language, setting_lang
 from src.variables import *
-from src.Logic.menu import main_menu
+from src.Logic.menu import main_menu, unknown_command
 from src.Logic.about_yangel import about_yangel, about_yangel_handler
 from src.Logic.mentor import mentor, mentor_handler, mentor_name, mentor_expertise, \
                         mentor_experience, mentor_site, mentor_email, mentor_final_q
@@ -42,6 +42,8 @@ def main_menu_handler(update, context):
         return mentor(update, context)
     elif answer == c.text['main_menu']['fourth_option'][lang]:
         return partner(update, context)
+    else:
+        return unknown_command(update, context)
 
 
 def start(update, context):

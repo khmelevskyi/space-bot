@@ -2,7 +2,7 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from src.variables import *
 import src.config as c
 from src.Logic.language_set import language
-from src.Logic.menu import main_menu
+from src.Logic.menu import main_menu, unknown_command
 from src.user_manager import UM, Startuper
 from src.Logic.verification import *
 
@@ -17,6 +17,8 @@ def startuper_final_q(update, context):
     elif answer == c.text['to_main_menu'][lang]:
         print(UM.currentUsers)
         return main_menu(update, context)
+    else:
+        return unknown_command(update, context)
 
 
 def startuper_why_we(update, context):
@@ -98,6 +100,8 @@ def q_round_yes_no(update, context):
         return STARTUPER_NAME ##################################### fill the blank
     elif answer == c.text['to_main_menu'][lang]:
         return main_menu(update, context)
+    else:
+        return unknown_command(update, context)
 
 
 def team_yes_no(update, context):
@@ -113,6 +117,8 @@ def team_yes_no(update, context):
         markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
         update.message.reply_text(text=c.text['startup_ans']['third'][lang], reply_markup=markup)
         return TRY_AGAIN_OR_MM # try again(go to question about tech) or move to main menu
+    else:
+        return unknown_command(update, context)
 
 
 def proto_yes_no(update, context):
@@ -128,6 +134,8 @@ def proto_yes_no(update, context):
         markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
         update.message.reply_text(text=c.text['startup_ans']['second'][lang], reply_markup=markup)
         return TRY_AGAIN_OR_MM
+    else:
+        return unknown_command(update, context)
 ### team, prototype and qualification round
 
 
@@ -145,6 +153,8 @@ def fantastic_yes_no(update, context): # if the answer to fantastic question is 
         markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
         update.message.reply_text(text=c.text['startup_ans']['fourth'][lang], reply_markup=markup)
         return TRY_AGAIN_OR_MM
+    else:
+        return unknown_command(update, context)
 
 
 def edu_yes_no(update, context):
@@ -160,6 +170,8 @@ def edu_yes_no(update, context):
         markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
         update.message.reply_text(text=c.text['startup_q']['fantastic'][lang], reply_markup=markup)
         return FANTASTIC_YES_NO
+    else:
+        return unknown_command(update, context)
 
 
 def tech_yes_no(update, context): # takes the answer from tech_q(about tech question) and (if answer for tech_q is yes)
@@ -175,6 +187,8 @@ def tech_yes_no(update, context): # takes the answer from tech_q(about tech ques
         markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
         update.message.reply_text(text=c.text['startup_q']['edu'][lang], reply_markup=markup)
         return EDU_YES_NO
+    else:
+        return unknown_command(update, context)
 
 
 def tech_q(update, context): #takes the answer from the prev question, if answer is 'let's go' - makes two buttons: yes
@@ -188,6 +202,8 @@ def tech_q(update, context): #takes the answer from the prev question, if answer
         return TECH_YES_NO
     elif answer == c.text['back'][lang]:
         return main_menu(update, context)
+    else:
+        return unknown_command(update, context)
 ### tech, edu and fantastic questions
 
 
@@ -198,6 +214,8 @@ def try_again_or_mm(update, context): # try again(go to question about tech) or 
         return tech_yes_no(update, context)
     elif answer == c.text['to_main_menu'][lang]:
         return main_menu(update, context)
+    else:
+        return unknown_command(update, context)
 
 
 def startup(update, context):

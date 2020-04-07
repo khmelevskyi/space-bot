@@ -28,7 +28,7 @@ def idea_check(idea):
 
 # прототип продукта - стартапер пишет хотя бы два слова о прототипе
 def prototype_check(prototype):
-    if prototype.count(" ") >= 1:
+    if len(prototype) >= 5:
         return True
     else:
         return False

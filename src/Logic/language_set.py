@@ -33,7 +33,7 @@ def setting_lang(update, context):
         lang = 0
         db.setLang(update.effective_chat.id, lang)
     else:
-        # if he inputs some shit we are not alowing to go further
+        # if he inputs some shit we are not allowing to go further
         return language(update)
 
     markup = ReplyKeyboardMarkup([[c.text['to_main_menu'][lang]]], resize_keyboard=True, one_time_keyboard=True)

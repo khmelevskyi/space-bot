@@ -2,7 +2,7 @@ from telegram import ReplyKeyboardMarkup
 from src.variables import *
 from src.Logic.language_set import language
 import src.config as c
-from src.Logic.menu import main_menu
+from src.Logic.menu import main_menu, unknown_command
 
 def about_yangel(update, context):
     lang = language(update)
@@ -18,4 +18,6 @@ def about_yangel_handler(update, context):
         return main_menu(update, context)
     elif answer == c.text['first_menu']['second_option'][lang]:
         context.bot.send_message(text='http://www.nkau.gov.ua', chat_id=update.effective_chat.id)
+    else:
+        return unknown_command(update, context)
 

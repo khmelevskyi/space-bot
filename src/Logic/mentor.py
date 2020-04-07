@@ -2,7 +2,7 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from src.variables import *
 import src.config as c
 from src.Logic.language_set import language
-from src.Logic.menu import main_menu
+from src.Logic.menu import main_menu, unknown_command
 from src.user_manager import UM, Mentor
 from src.Logic.verification import *
 
@@ -15,6 +15,8 @@ def mentor_final_q(update, context):
         return main_menu(update, context)
     elif answer == c.text['to_main_menu'][lang]:
         return main_menu(update, context)
+    else:
+        return unknown_command(update, context)
 
 
 def mentor_email(update, context):
@@ -95,6 +97,8 @@ def mentor_handler(update, context):
         return MENTOR_NAME
     elif answer == c.text['back'][lang]:
         return main_menu(update, context)
+    else:
+        return unknown_command(update, context)
 
 
 def mentor(update, context):
