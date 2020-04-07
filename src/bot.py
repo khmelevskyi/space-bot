@@ -3,18 +3,18 @@ from telegram import ReplyKeyboardMarkup #KeyboardButton,InlineKeyboardMarkup,In
 from os import environ as env, getcwd # for environmental variables
 import logging #used for error detection
 
-import src.config as c
-from src.database import DbInterface
-from src.user_manager import UM
-from src.Logic.language_set import language, setting_lang
-from src.variables import *
-from src.Logic.menu import main_menu, unknown_command
-from src.Logic.about_yangel import about_yangel, about_yangel_handler
-from src.Logic.mentor import mentor, mentor_handler, mentor_name, mentor_expertise, \
+import config as c
+from database import DbInterface
+from user_manager import UM
+from Logic.language_set import language, setting_lang
+from variables import *
+from Logic.menu import main_menu, unknown_command
+from Logic.about_yangel import about_yangel, about_yangel_handler
+from Logic.mentor import mentor, mentor_handler, mentor_name, mentor_expertise, \
                         mentor_experience, mentor_site, mentor_email, mentor_final_q
-from src.Logic.partner import partner, partner_handler, partner_name, partner_org_name, \
+from Logic.partner import partner, partner_handler, partner_name, partner_org_name, \
                         partner_org_pos, partner_email, partner_final_q
-from src.Logic.startup import startup, tech_q, tech_yes_no, edu_yes_no, \
+from Logic.startup import startup, tech_q, tech_yes_no, edu_yes_no, \
                         fantastic_yes_no, proto_yes_no, team_yes_no, \
                         q_round_yes_no, try_again_or_mm, startuper_name, \
                         startuper_email, startuper_idea, startuper_proto, \

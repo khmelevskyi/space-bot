@@ -1,7 +1,8 @@
 from telegram import ReplyKeyboardMarkup, PhotoSize
-import src.config as c
-from src.variables import *
-from src.Logic.language_set import language
+from os import getcwd
+import config as c
+from variables import *
+from Logic.language_set import language
 
 
 def main_menu(update, context):
@@ -24,7 +25,7 @@ def main_menu(update, context):
 
 def unknown_command(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text='Unknown command')
-    filename = '/Users/khmelevskyi/repos/space-bot/src/Logic/photo.png'
+    filename = getcwd() + '/src/Logic/photo.png'
     #picture = PhotoSize('/Users/khmelevskyi/repos/space-bot/src/Logic/', 'photo.png', width=120, height=50)
     with open(filename, 'rb') as file:
         context.bot.send_photo(chat_id=update.effective_chat.id, photo=file, caption='Press this button and choose the option')

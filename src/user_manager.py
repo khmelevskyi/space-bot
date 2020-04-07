@@ -2,10 +2,11 @@ import time
 import functools
 import threading
 from time import sleep
-from src.variables import *
 from telegram.ext import CallbackContext
-from src.Logic.language_set import language
-import src.config as c
+
+from variables import *
+from Logic.language_set import language
+import config as c
 
 
 class UserManager:

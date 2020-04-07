@@ -1,10 +1,10 @@
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
-from src.variables import *
-import src.config as c
-from src.Logic.language_set import language
-from src.Logic.menu import main_menu, unknown_command
-from src.user_manager import UM, Mentor
-from src.Logic.verification import *
+from variables import *
+import config as c
+from Logic.language_set import language
+from Logic.menu import main_menu, unknown_command
+from user_manager import UM, Mentor
+from Logic.verification import *
 
 
 def mentor_final_q(update, context):
