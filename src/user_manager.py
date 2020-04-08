@@ -27,7 +27,7 @@ class UserManager:
                 if time.time() - user.lastActivityTime > self.user_removal_time and user.get_last_item() is None:
                     update = user.update
                     context = user.context
-                    return UserManager.notificate_user(update, context)
+                    UserManager.notificate_user(update, context)
                 elif time.time() - user.lastActivityTime > self.user_removal_time and user.get_last_item() is not None:
                     users_to_send_and_delete.append(user.chat_id)
             for id in users_to_send_and_delete:
@@ -38,7 +38,6 @@ class UserManager:
     def notificate_user(update, context):
         lang = language(update)
         context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['timeout'][lang])
-        return UserManager.__remove_old_users(UM)
 
     def delete_user(self, chat_id):
         if chat_id in self.currentUsers:

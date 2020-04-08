@@ -25,10 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 def admin(update, context):
-    pass
-
-
-
+    context.bot.send_message(chat_id=update.effective_chat.id, text='Success')
 
 
 def main_menu_handler(update, context):
@@ -42,6 +39,8 @@ def main_menu_handler(update, context):
         return mentor(update, context)
     elif answer == c.text['main_menu']['fourth_option'][lang]:
         return partner(update, context)
+    elif answer == c.text['main_menu']['fifth_option'][lang]:
+        pass
     else:
         return unknown_command(update, context)
 
@@ -123,6 +122,7 @@ def main():
         fallbacks=[CommandHandler('stop', done)], allow_reentry=True
     )
     dispatcher.add_handler(conv_handler)
+    #dispatcher.add_error_handler(error)
 
     updater.start_polling()
     updater.idle()

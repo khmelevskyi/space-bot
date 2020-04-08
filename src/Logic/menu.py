@@ -26,6 +26,6 @@ def main_menu(update, context):
 def unknown_command(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text='Unknown command')
     filename = getcwd() + '/src/Logic/photo.png'
-    #picture = PhotoSize('/Users/khmelevskyi/repos/space-bot/src/Logic/', 'photo.png', width=120, height=50)
+    #picture = PhotoSize(getcwd() + '/src/Logic/', 'photo.png', width=120, height=50)
     with open(filename, 'rb') as file:
         context.bot.send_photo(chat_id=update.effective_chat.id, photo=file, caption='Press this button and choose the option')
