@@ -12,7 +12,7 @@ import config as c
 class UserManager:
 
     def __init__(self):
-        self.user_removal_time = 1800
+        self.user_removal_time = 3600
         self.currentUsers = {}
         self.userthread = threading.Thread(target=self.__remove_old_users)
         self.userthread.start()
