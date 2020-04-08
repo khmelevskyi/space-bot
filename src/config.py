@@ -248,4 +248,12 @@ text = {
                                    1: 'Partners'},
 
                       },
+
+    #STATS
+    'stats': {0: '',
+              1: 'Today the bot was used by {new_u_stats_daily} users\n'
+                 'All in all, the bot was used by {new_users_stats_weekly} users in a week\n'
+                 'By {new_users_stats_monthly} users in a month'},
+    'more_stats': {0: '',
+                   1: ''},
         }
