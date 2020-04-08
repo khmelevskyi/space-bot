@@ -223,5 +223,29 @@ text = {
                                      1: 'Enter the name of your organization properly'},
                'organization_position': {0: 'Введіть назву вашої позиції коректно',
                                          1: "Enter your position's name properly"}
-               }
+               },
+
+    #ADMIN
+    'hi_boss': {0: 'Привіт, бос!\nЩо бажаєш зробити?',
+                1: 'Hi, boss! What do you want to do?'},
+    'sorry_not_boss': {0: 'Вибачте, але ви не адмін',
+                       1: 'Sorry, but you are not an admin'},
+    'get_stats': {0: 'Сьогоднішня статистика:',
+                  1: "Today's statistics:"},
+    'push_q': {0: 'Кому ви хочете надіслати повідомлення?',
+               1: 'Who do you want to send a notification to?'},
+    'options_admin': {'push': {0: 'Повідомлення',
+                               1: 'Push'},
+                      'stats': {0: 'Статистика',
+                                1: 'Statistics'},
+                      'all': {0: 'Всім',
+                              1: 'All'},
+                      'startup': {0: 'Стартапи',
+                                  1: 'Startups'},
+                      'mentor': {0: 'Ментори',
+                                 1: 'Mentors'},
+                      'partner': {0: 'Партнери',
+                                   1: 'Partners'},
+
+                      },
         }

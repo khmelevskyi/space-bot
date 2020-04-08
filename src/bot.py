@@ -19,13 +19,10 @@ from Logic.startup import startup, tech_q, tech_yes_no, edu_yes_no, \
                         q_round_yes_no, try_again_or_mm, startuper_name, \
                         startuper_email, startuper_idea, startuper_proto, \
                         startuper_why_we, startuper_final_q
+from Logic.admin_panel import admin_handler, admin
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-
-def admin(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text='Success')
 
 
 def main_menu_handler(update, context):
@@ -116,6 +113,7 @@ def main():
             PARTNER_ORG_POS:      [*necessary_handlers, MessageHandler(Filters.text, partner_org_pos)],
             PARTNER_EMAIL:        [*necessary_handlers, MessageHandler(Filters.text, partner_email)],
             PARTNER_FINAL_Q:      [*necessary_handlers, MessageHandler(Filters.text, partner_final_q)],
+            ADMIN_HANDLER:        [*necessary_handlers, MessageHandler(Filters.text, admin_handler)],
 
         },
 

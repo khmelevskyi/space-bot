@@ -12,7 +12,8 @@ def main_menu(update, context):
             answer == c.text['to_main_menu'][lang] or
             answer == c.text['first_menu']['first_option'][lang] or
             answer == c.text['en'] or answer == c.text['ua'] or
-            answer == c.text['final_option'][lang] or answer == c.text['no'][lang]):
+            answer == c.text['final_option'][lang] or answer == c.text['no'][lang] or
+            answer == '/admin'):
         reply_keyboard = [[c.text['main_menu']['first_option'][lang], c.text['main_menu']['second_option'][lang]],
                           [c.text['main_menu']['third_option'][lang], c.text['main_menu']['fourth_option'][lang]],
                           [c.text['main_menu']['fifth_option'][lang]]]
