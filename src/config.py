@@ -150,6 +150,15 @@ text = {
                                        'Can I do anything else for you?'},
                         },
 
+    #BIG BANG PREACCELERATOR STARTUP REGISTRATION
+    'bb_startup': {0: 'Чудово! Ми пропонуємо менторську та фінансову підтримку стартапам, які відповідають '
+                      'певним критеріям. Щоб підготуватись до селекції, можна вже зараз взяти участь у '
+                      'преакселератораторі Yangel Big Bang. Пропоную пройти короткий тест, щоб з’ясувати, '
+                      'чи підходить програма саме вам.',
+                   1: 'Awesome! We offer mentorship financial support to the startups who meet our criteria. '
+                      'To prepare for the selection, you are already able to participate in the preselection '
+                      'program Yangel Big Bang. Try our short test to see if your project qualifies for the program.'},
+
     #MENTOR
     'mentor': {0: 'Дякую за вашу готовність допомагати нашим учасникам. Нам потрібні ментори із різною експертизою,'
                   ' які будуть готові співпрацювати онлайн або офлайн. Будь ласка, заповніть форму для менторів. '

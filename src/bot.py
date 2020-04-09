@@ -14,7 +14,7 @@ from Logic.mentor import mentor, mentor_handler, mentor_name, mentor_expertise, 
                         mentor_experience, mentor_site, mentor_email, mentor_final_q
 from Logic.partner import partner, partner_handler, partner_name, partner_org_name, \
                         partner_org_pos, partner_email, partner_final_q
-from Logic.startup import startup, tech_q, tech_yes_no, edu_yes_no, \
+from Logic.bb_startup import startup, tech_q, tech_yes_no, edu_yes_no, \
                         fantastic_yes_no, proto_yes_no, team_yes_no, \
                         q_round_yes_no, try_again_or_mm, startuper_name, \
                         startuper_email, startuper_idea, startuper_proto, \
