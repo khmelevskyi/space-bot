@@ -20,7 +20,8 @@ from Logic.bb_startup import startup, tech_q, tech_yes_no, edu_yes_no, \
                         startuper_email, startuper_idea, startuper_proto, \
                         startuper_why_we, startuper_final_q
 from Logic.admin_panel import admin_handler, admin
-from Logic.stats_manager import new_users_stats
+# from Logic.stats_manager import new_users_stats
+from Logic.random_fact import random_fact
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -38,7 +39,7 @@ def main_menu_handler(update, context):
     elif answer == c.text['main_menu']['fourth_option'][lang]:
         return partner(update, context)
     elif answer == c.text['main_menu']['fifth_option'][lang]:
-        pass
+        update.message.reply_text(text = random_fact())
     else:
         return unknown_command(update, context)
 
@@ -46,7 +47,7 @@ def main_menu_handler(update, context):
 def start(update, context):
     """Welcome greating and proposing to choose the language"""
     lang = language(update)
-    new_users_stats.add_stats(update.effective_chat.id, update.message.chat.username)
+    # new_users_stats.add_stats(update.effective_chat.id, update.message.chat.username)
     if update.effective_chat.id in UM.currentUsers:
         del UM.currentUsers[update.effective_chat.id]
     if lang == 1 or lang == 0:

@@ -4,12 +4,12 @@ from Logic.menu import main_menu, unknown_command
 from Logic.language_set import language
 import config as c
 from variables import *
-from Logic.stats_manager import statistics
+# from Logic.stats_manager import statistics
 
 
 def get_stats(update, context):
     lang = language(update)
-    context.bot.send_message(chat_id=update.effective_chat.id, text=statistics.get_stats(lang))
+    # context.bot.send_message(chat_id=update.effective_chat.id, text=statistics.get_stats(lang))
     # return more stat if person chooses
 
 
