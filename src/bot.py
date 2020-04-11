@@ -4,7 +4,7 @@ from os import environ as env, getcwd # for environmental variables
 import logging #used for error detection
 
 import config as c
-from database import DbInterface
+from database import db
 from user_manager import UM
 from Logic.language_set import language, setting_lang
 from variables import *
@@ -47,7 +47,7 @@ def main_menu_handler(update, context):
 def start(update, context):
     """Welcome greating and proposing to choose the language"""
     lang = language(update)
-    # new_users_stats.add_stats(update.effective_chat.id, update.message.chat.username)
+    db.add_user(update.effective_chat.id)
     if update.effective_chat.id in UM.currentUsers:
         del UM.currentUsers[update.effective_chat.id]
     if lang == 1 or lang == 0:

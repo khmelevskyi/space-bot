@@ -10,7 +10,15 @@ from variables import *
 def get_stats(update, context):
     lang = language(update)
     # context.bot.send_message(chat_id=update.effective_chat.id, text=statistics.get_stats(lang))
-    # return more stat if person chooses
+    # get_date
+    pass
+
+
+def push_who(update, context):
+    lang = language(update)
+    answer = update.message.text
+    # get_users
+    pass
 
 
 def admin_handler(update, context):

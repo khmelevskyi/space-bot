@@ -10,6 +10,7 @@ from Logic.verification import *
 def mentor_final_q(update, context):
     lang = language(update)
     answer = update.message.text
+    db.update_user(update.effective_chat.id, 'mentor', datetime.datetime.now().timestamp())
     if answer == c.text['final_option'][lang]:
         context.bot.send_message(chat_id=update.effective_chat.id, text=c.text['final_answer'][lang])
         return main_menu(update, context)
