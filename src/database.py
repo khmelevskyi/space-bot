@@ -1,5 +1,6 @@
 import sqlite3
-#from os import getcwd
+import datetime
+from os import getcwd
 
 
 class DbInterface:
@@ -7,34 +8,58 @@ class DbInterface:
         self.conn = sqlite3.connect(path, check_same_thread=False)
         self.cursor = self.conn.cursor()
 
-    # def getGames(self, type=None, age=None, amount=None, location=None, props=None):
-    #     sql = "SELECT DISTINCT Id FROM Games WHERE "
-    #     args = [type]
-    #     sql += 'Type=?'
-    #     if age is not None:
-    #         sql += 'AND (Age=? OR Age is NULL)'
-    #         args.append(age)
-    #     if amount is not None:
-    #         sql += 'AND (Amount=? OR Amount is NULL)'
-    #         args.append(amount)
-    #     if location is not None:
-    #         sql += 'AND (Location=? OR Location is NULL)'
-    #         args.append(location)
-    #     if props is not None:
-    #         sql += 'AND (Props=? OR Props is NULL)'
-    #         args.append(props)
-    #     self.cursor.execute(sql, args)
-    #     data = self.cursor.fetchall()
-    #     return data if len(data) == 0 else tuple(d[0] for d in data)
+    def add_user(self, chat_id):
+        sql = 'INSERT INTO Users (chat_id) VALUES (?)'
+        args = [chat_id]
+        try:
+            self.cursor.execute(sql, args)
+            self.conn.commit()
+        except sqlite3.IntegrityError:
+            self.conn.commit()
+            print(f"User {chat_id} exists")
 
-    # def authorizeUser(self, chat_id):
-    #     sql = 'INSERT INTO Users (Chat_id) VALUES (?)'
-    #     args = [chat_id]
-    #     try:
-    #         self.cursor.execute(sql, args)
-    #         self.conn.commit()
-    #     except sqlite3.IntegrityError:
-    #         print("User exists")
+    def update_user(self, chat_id, status, date):
+        sql = 'UPDATE Users SET status = (?), date = (?) WHERE chat_id = (?)'
+        args = [status, date, chat_id]
+        try:
+            self.cursor.execute(sql, args)
+            self.conn.commit()
+        except sqlite3.IntegrityError:
+            self.conn.commit()
+            print(f"User {chat_id} couse fucking error")
+
+    def get_date(self, status: str) -> list:
+        sql = 'SELECT date from Users WHERE status = (?)'
+        args = [status]
+        try:
+            self.cursor.execute(sql, args)
+            self.conn.commit()
+        except sqlite3.IntegrityError:
+            self.conn.commit()
+            print("error to get datetime timestamp")
+            
+        timestamps = [i[0] for i in self.cursor.fetchall()]
+        return timestamps
+
+    def get_users(self, status = None) -> list:
+        if not status:
+            sql = 'SELECT chat_id from Users'
+        else:
+            sql = 'SELECT chat_id from Users WHERE status = (?)'
+            args = [status]
+        try:
+            if not status:
+                self.cursor.execute(sql)
+            else:
+                self.cursor.execute(sql, args)
+            self.conn.commit()
+        except sqlite3.IntegrityError:
+            self.conn.commit()
+            print("error to get chat_id")
+
+        users = [i[0] for i in self.cursor.fetchall()]
+        return users
+
 
     # def clearUsers(self):
     #     sql = 'DELETE FROM USERS'
@@ -49,6 +74,7 @@ class DbInterface:
     #     args = [chat_id]
     #     self.cursor.execute(sql, args)
     #     return True if self.cursor.fetchall()[0][0] == 1 else False
+    
     def idx(self): # creates unique indexes to make impossible to write the same chat_id in BD twi
         sql2 = 'CREATE UNIQUE INDEX idx_Language_chat_id ON Language (chat_id)'
         self.cursor.execute(sql2)
@@ -85,10 +111,12 @@ class DbInterface:
         return self.cursor.fetchall()[0][0]
 
     
-# print(getGames(0,0,0,0,0))
-#DbInterface(getcwd() + '/Space_DB.db').setLang(11, 0)
-#print(DbInterface(getcwd() + '/Space_DB.db').getLang(10))
-#print(DbInterface(getcwd() + '/Space_DB.db').getLang(11))
-# authorizeUser()
+# db = DbInterface(getcwd() + '/Space_DB.db')
+# db.add_user(11)
+# db.add_user(12)
+# db.add_user(14)
+# db.update_user(11, "new", 1.1)
+# db.update_user(12, "new", 1.2)
+# print(db.get_users("new"))
 # print(checkUser(100))
 # clearUsers()
