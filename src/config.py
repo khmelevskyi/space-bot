@@ -243,6 +243,9 @@ text = {
                   1: "Today's statistics:"},
     'push_q': {0: 'Кому ви хочете надіслати повідомлення?',
                1: 'Who do you want to send a notification to?'},
+    'stats_q': {0: 'Тут можна дивитись статистику відправлених заявок по дням\nЯку саме статистику ви хочете побачити?',
+                1: 'Here you can see the statistics of sent applications by days\nWhat statistics exactly '
+                   'do you want to see?'},
     'options_admin': {'push': {0: 'Повідомлення',
                                1: 'Push'},
                       'stats': {0: 'Статистика',

@@ -5,6 +5,8 @@ from Logic.language_set import language
 from Logic.menu import main_menu, unknown_command
 from user_manager import UM, Mentor
 from Logic.verification import *
+from database import db
+import datetime
 
 
 def mentor_final_q(update, context):
