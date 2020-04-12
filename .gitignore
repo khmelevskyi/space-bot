@@ -132,9 +132,12 @@ dmypy.json
 __init__.py
 lang_set.py
 startup_menu.py
+<<<<<<< HEAD
 Space_DB.db
 Space_DB.db.sqbpro
 .idea
 some_file
 /datetime.csv
 /graph.png
+=======
+>>>>>>> 7f35a52de30fb6fccc7f6e6d5d2495c6d43a8ed5
