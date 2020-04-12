@@ -28,9 +28,9 @@ class DbInterface:
             self.conn.commit()
             print(f"User {chat_id} couse fucking error")
 
-    def get_date(self, status: str) -> list:
-        sql = 'SELECT date from Users WHERE status = (?)'
-        args = [status]
+    def get_date(self, status1: str, status2: str, status3: str) -> list:
+        sql = 'SELECT date, status from Users WHERE status = (?) OR status = (?) or status = (?)'
+        args = [status1, status2, status3]
         try:
             self.cursor.execute(sql, args)
             self.conn.commit()
@@ -38,7 +38,7 @@ class DbInterface:
             self.conn.commit()
             print("error to get datetime timestamp")
             
-        timestamps = [i[0] for i in self.cursor.fetchall()]
+        timestamps = [i for i in self.cursor.fetchall()]
         return timestamps
 
     def get_users(self, status = None) -> list:

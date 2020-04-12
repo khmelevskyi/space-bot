@@ -13,14 +13,15 @@ import Logic.graph_create
 import subprocess
 
 
-def stats_handler(update, context, specialization):
-    date_data = db.get_date(specialization)
+def stats_handler(update, context):
+    date_data = db.get_date('startup', 'mentor', 'partner')
+    print(date_data)
     with open('datetime.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['date', 'count'])
-        i = 1
+        writer.writerow(['date', 'specialization', 'startup', 'mentor', 'partner'])
+        #i = 1
         for z in date_data:
-            writer.writerow([datetime.fromtimestamp(z).date(), i])
+            writer.writerow([datetime.fromtimestamp(z[0]).date(), z[1]])
         file.close()
     path = getcwd() + "/src/Logic/graph_create.py"
     subprocess.run(f'python3 {path}', shell=True)
@@ -35,7 +36,8 @@ def get_stats(update, context):
     answer = update.message.text
     # context.bot.send_message(chat_id=update.effective_chat.id, text=statistics.get_stats(lang))
     # get_date
-    if answer == c.text['options_admin']['startup'][lang]:
+    return stats_handler(update, context)
+"""if answer == c.text['options_admin']['startup'][lang]:
         return stats_handler(update, context, 'startup')
     elif answer == c.text['options_admin']['mentor'][lang]:
         return stats_handler(update, context, 'mentor')
@@ -45,6 +47,7 @@ def get_stats(update, context):
         return admin(update, context)
     else:
         return unknown_command(update, context)
+"""
 
 
 def push_who(update, context):
@@ -64,11 +67,7 @@ def admin_handler(update, context):
         update.message.reply_text(text=c.text['push_q'][lang], reply_markup=markup)
         pass #return PUSH_WHO, then PUSH_TEXT, PUSH_FINAL
     elif answer == c.text['options_admin']['stats'][lang]:
-        reply_keyboard = [[c.text['options_admin']['startup'][lang], c.text['options_admin']['mentor'][lang]],
-                          [c.text['options_admin']['partner'][lang], c.text['back']]]
-        markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
-        update.message.reply_text(text=c.text['stats_q'][lang], reply_markup=markup)
-        return GET_STATS
+        return stats_handler(update, context)
     elif answer == c.text['to_main_menu'][lang]:
         return main_menu(update, context)
     else:
@@ -80,7 +79,7 @@ def admin(update, context):
     if update.message.chat.username in ('khmellevskyi', 'V_Vargan'):
         reply_keyboard = [[c.text['options_admin']['push'][lang], c.text['options_admin']['stats'][lang]],
                           [c.text['to_main_menu'][lang]]]
-        markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True, one_time_keyboard=True)
+        markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True)
         update.message.reply_text(text=c.text['hi_boss'][lang], reply_markup=markup)
         return ADMIN_HANDLER
     else:
