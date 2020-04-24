@@ -2,17 +2,12 @@ from telegram import ReplyKeyboardMarkup
 from variables import *
 import config as c
 
-from database import DbInterface
+from database import DB
 from os import getcwd
-
-# get path of the database file and creating the manager object
-
-path = getcwd() + "/Space_DB.db"
-db = DbInterface(path)
 
 
 def language(update):
-    lang = db.getLang(update.message.chat_id)
+    lang = DB.getLang(update.message.chat_id)
     #print(update.effective_chat.id)
     if lang is None:
         update.message.reply_text(text=c.text['start'])
@@ -28,10 +23,10 @@ def setting_lang(update, context):
     answer = update.message.text
     if answer == c.text["en"]:
         lang = 1
-        db.setLang(update.effective_chat.id, lang)
+        DB.setLang(update.effective_chat.id, lang)
     elif answer == c.text["ua"]:
         lang = 0
-        db.setLang(update.effective_chat.id, lang)
+        DB.setLang(update.effective_chat.id, lang)
     else:
         # if he inputs some shit we are not allowing to go further
         return language(update)
