@@ -1,0 +1,7 @@
+python-telegram-bot --upgrade
+oauth2client
+gspread
+pandas
+matplotlib
+
+-U python-dotenv
